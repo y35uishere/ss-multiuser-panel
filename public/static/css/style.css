@@ -1,0 +1,48 @@
+/*
+ * Author: LittleJake
+ * Email: 465917717@qq.com
+ * Licensed under Apache 2.0 (http://www.apache.org/licenses/)
+ * 
+ */
+
+/* global */
+body {
+	color: #888;
+}
+    
+a {
+	color: #fff;
+    opacity: 0.8;
+    border-bottom: 1px solid transparent;
+}
+
+a:hover {
+	color: #fff; 
+	opacity: 1; 
+	border-bottom: 1px solid #fff; 
+}
+a:focus {
+    color: #fff;
+    outline: 0;
+    opacity: 1;
+    border-bottom: 1px solid #fff;
+}
+
+
+/* navigation */
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+	background-color: transparent;
+}
+
+.navbar {
+	color: white;
+	background: #ADADAD;
+}
+
+.navbar-brand {
+	width: 160px;
+	height: 80px;
+	background: url("../pic/logo.png");
+}
