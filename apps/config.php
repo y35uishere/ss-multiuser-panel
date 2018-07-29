@@ -114,7 +114,7 @@ return [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
         // 模板路径
-        'view_path'    => '',
+        'view_path'    => 'resources/view/',
         // 模板后缀
         'view_suffix'  => 'html',
         // 模板文件名分隔符
@@ -194,7 +194,7 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'think',
+        'prefix'         => 'ssp',
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
         // 是否自动开启 SESSION
@@ -227,4 +227,6 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    
+    'site_name' => 'SSPanel',
 ];

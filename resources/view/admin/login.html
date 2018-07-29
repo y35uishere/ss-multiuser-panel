@@ -3,32 +3,27 @@
 	<head>
 		<meta charset="UTF-8">
 		{include file="default/css"}
-		<title>用户登录</title>
+		<title>后台登录——{:config('site_name')}</title>
 	</head>
 	<body>
-		{include file="default/header"}
+		{include file="default/admin_header"}
 		<div class="container">
 			<div class="col-lg-4">
 				<form>
-					<h1>用户登录</h1>
+					<h1>后台登录</h1>
 					<hr />
 					<input class="form-control" placeholder="账号" />
 					<br />
 					<input type="password" class="form-control" placeholder="密码" maxlength="20"/>
 					<br />
 					<input value="登录" class="btn btn-default" type="submit" />
-					<div class="pull-right">
-						<a class="btn btn-default">注册</a>
-						<a class="btn btn-default">忘记密码</a>
-					</div>
-					<br />
-					
 				</form>
 			</div>
 		</div>
 			
 		
 		
-	{include file="default/js"}
+		{include file="default/footer"}
+		{include file="default/js"}
 	</body>
 </html>
