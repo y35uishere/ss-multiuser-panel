@@ -29,7 +29,7 @@
         <?php } ?>
         <p class="detail"></p>
         <p class="jump">
-            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <b id="wait"><?php echo($wait);?></b>
+        	<b id="wait"><?php echo($wait);?></b> s后，页面将自动 <a id="href" href="<?php echo($url);?>">跳转</a>
         </p>
     </div>
     <script type="text/javascript">

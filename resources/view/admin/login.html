@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		{include file="default/css"}
-		<title>后台登录——{:config('site_name')}</title>
-	</head>
+	{include file="default/head"}
 	<body>
 		{include file="default/admin_header"}
-		<div class="container">
-			<div class="col-lg-4">
-				<form>
-					<h1>后台登录</h1>
-					<hr />
-					<input class="form-control" placeholder="账号" />
-					<br />
-					<input type="password" class="form-control" placeholder="密码" maxlength="20"/>
-					<br />
-					<input value="登录" class="btn btn-default" type="submit" />
-				</form>
+		<div class="login">
+			<div class="container">
+				<div class="col-lg-4">
+					<form>
+						<h1>后台登录</h1>
+						<hr />
+						<input class="form-control" placeholder="账号" />
+						<br />
+						<input type="password" class="form-control" placeholder="密码" maxlength="20"/>
+						<br />
+						<input value="登录" class="btn btn-default" type="submit" />
+					</form>
+				</div>
 			</div>
 		</div>
-			
 		
 		
 		{include file="default/footer"}

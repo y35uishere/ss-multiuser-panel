@@ -11,23 +11,27 @@ body {
 }
     
 a {
-	color: #fff;
+	color: #4578A6;
     opacity: 0.8;
     border-bottom: 1px solid transparent;
 }
 
 a:hover {
-	color: #fff; 
+	color: #4578A6; 
 	opacity: 1; 
 	border-bottom: 1px solid #fff; 
 }
+
 a:focus {
-    color: #fff;
+    color: #4578A6;
     outline: 0;
     opacity: 1;
     border-bottom: 1px solid #fff;
 }
 
+.img-center {
+	margin: 0 auto;
+}
 
 /* navigation */
 
@@ -41,7 +45,8 @@ a:focus {
 
 .navbar {
 	color: white;
-	background: #ADADAD;
+	background: #D5EBFF;
+	margin-bottom: 0px;
 }
 
 .navbar-brand {
@@ -55,11 +60,62 @@ a:focus {
 	border: 1px solid #ffffff61;
 }
 
+.title {
+	color: #4578A6;
+}
+
+/* index */
+.masterhead {
+	background: #599A96;
+}
+
+.hero-unit {
+	color: white;
+    padding: 40px;
+    margin: 5% 5%;
+    font-size: 18px;
+    border-radius: 10px;
+    background: rgba(79, 115, 113, 0.3);
+}
+
+.hero-unit > h1 {
+	font-size: 50px;
+}
+
+.subhead {
+	background: #DE7B54;
+	color: white;
+}
+
+.subhead,
+.introduce {
+	font-size: 18px;
+	text-align: center;
+}
+
+.subhead > .container,
+.introduce > .container {
+	padding: 40px;
+}
+
+.introduce {
+	background: #F8DDC8;
+	color: #A16B41;
+}
+
 
 /* footer */
 .footer {
 	color: white;
-	margin: 5% auto;
+	margin: 0 auto;
 	padding: 20px 0;
-	background: #ADADAD;;
+	background: #CCA78D;
 }
+
+/* login, register */
+.login,
+.register {
+	background: #F8DDC8;
+	padding: 40px;
+}
+

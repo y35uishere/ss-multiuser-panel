@@ -14,11 +14,19 @@ class Base extends Controller {
 			    'auto_start' => true,
 		]);
 		
-		if(session('?id')) {
+		if(session('?username')) {
+			$this -> assign('username', session('username'));
 			$this -> assign('is_login', 1);
 		}
 		
 
+	}
+	
+	protected function ssp_secret($pass = '') {
+		if(empty($pass))
+			return null;
+			
+		return md5('SsPaNeL'. $pass);
 	}
 	
 	

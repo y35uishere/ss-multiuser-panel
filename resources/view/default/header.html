@@ -2,19 +2,20 @@
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
+				<span class="sr-only">下拉菜单</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="__ROOT__"></a>
+			<p class="title">{$page_title}</p>
 		</div>
 				
 		<div class="navbar-collapse collapse" id="top-navbar" aria-expanded="false" style="height: 0px;">
 			<ul class="nav navbar-nav navbar-right">
 				{if isset($is_login) &&  $is_login == 1}
 				<li class="dropdown">
-					<a class="dropdown-toggle" href="#" data-toggle="dropdown">username<b class="caret"></b></a>
+					<a class="dropdown-toggle" href="#" data-toggle="dropdown">{$username} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="{:url('index/user/index')}">个人帐户</a></li>
 						<li class="divider"></li>

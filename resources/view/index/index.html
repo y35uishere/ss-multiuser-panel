@@ -1,15 +1,69 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		{include file="default/css"}
-		<title>首页——{:config('site_name')}</title>
-	</head>
+	{include file="default/head"}
 	<body>
 		{include file="default/header"}
 		<div class="masterhead">
 			<div class="container">
-			
+				<div class="hero-unit">
+					<h1>SSPanel流量管理平台</h1>
+					<p>致力于更简单的管理而生。</p>
+					<br>
+					<br>
+					<p>
+						<a class="btn btn-large btn-primary" href="{:url('index/user/register')}">即刻加入</a>
+						<a class="btn btn-large btn-default" href="{:url('index/user/login')}">已有账号？</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="subhead">
+			<div class="container">
+				<h1 class="text-center">客户端，拥有众多的硬件平台支撑</h1>
+				<br>
+				<div class="col-lg-4">
+					<img alt="laptop" src="__IMG__/laptop.png" class="img-responsive img-center">
+					<h2>电脑</h2>
+					<hr>
+					<p>Windows、Mac OS、Linux</p>
+				</div>
+				<div class="col-lg-4">
+					<img alt="mobile" src="__IMG__/pd.png" class="img-responsive img-center">
+					<h2>手机</h2>
+					<hr>
+					<p>Android、iOS</p>
+				</div>
+				<div class="col-lg-4">
+					<img alt="router" src="__IMG__/router.png" class="img-responsive img-center">
+					<h2>路由器</h2>
+					<hr>
+					<p>包括但不限于基于OpenWRT的系统</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="introduce">
+			<div class="container">
+				<h1 class="text-center">优势显著</h1>
+				<br>
+				<div class="col-lg-4">
+					<img alt="faster" src="__IMG__/thunder.png" class="img-responsive img-center">
+					<h2>更快的速度</h2>
+					<hr>
+					<p>拥有多个高速节点，更加快速地访问互联网</p>
+				</div>
+				<div class="col-lg-4">
+					<img alt="chrome" src="__IMG__/chrome.png" class="img-responsive img-center">
+					<h2>更加的便捷</h2>
+					<hr>
+					<p>推荐使用Google Chrome，SwitchyOmega插件能够通过在线列表智能地识别无法访问的网址，节省流量</p>
+				</div>
+				<div class="col-lg-4">
+					<img alt="management" src="__IMG__/management.png" class="img-responsive img-center">
+					<h2>简洁的信息</h2>
+					<hr>
+					<p>用户中心提供简洁、直观的流量使用信息，更加方便对流量的掌控，随用随付</p>
+				</div>
 			</div>
 		</div>
 		
