@@ -3,16 +3,52 @@
 	{include file="default/head"}
 	<body>
 		{include file="default/header"}
+		<div class="user-status">
+			<div class="container">
+				<div class="status">
+					<div class="container">
+						<div class="col-lg-3">
+							<img src="__IMG__/head.jpg" class="img-circle img-responsive" style="display: inline-block;">
+						</div>
+						
+						<div class="user-info col-lg-7">
+							<h2>$user，欢迎回来！</h2>
+							<hr>
+							<p>签到</p>
+							<a class="btn btn-default pull-right" href="#">签到</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		<div class="bandwith-status">
+			<div class="container">
+				<div class="status">
+					<h3>流量使用情况<a></a></h3>
+					<hr>
+					<p>剩余流量</p>
+					<div class="progress">
+						<div class="progress-bar total-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%; min-width: 2em;">
+							60%
+						</div>
+					</div>
+					
+					<p>使用流量</p>
+					<p>上行流量：，下行流量：</p>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success download-bar" style="width: 35%; min-width: 4em;">
+							下行流量
+						</div>
+						<div class="progress-bar progress-bar-warning upload-bar" style="width: 40%; min-width: 4em;">
+						 	上行流量
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
 		{include file="default/footer"}
 		{include file="default/js"}
 	</body>

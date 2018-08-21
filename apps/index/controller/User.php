@@ -52,6 +52,12 @@ class User extends Base
 		return $this -> fetch();
 	}
 	
+	public function forgot()
+    {
+		$this -> assign("page_title", "找回密码");
+		return $this -> fetch();
+	}
+	
 	public function logout()
 	{
 		session('username', null);

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	{include file="default/head"}
+	<body>
+		{include file="default/header"}
+		<div class="login">
+			<div class="container">
+				<div class="col-lg-4">
+					<form action="{:url('index/user/forgot')}" method="post">
+						<h1>找回密码</h1>
+						<hr />
+						<input name="id" class="form-control" placeholder="账号" required />
+						<br />
+						<input name="email" type="email" class="form-control" placeholder="注册邮箱" required />
+						<br />
+						<input value="发送验证" class="btn btn-default" type="submit" />
+						<br />
+					</form>
+				</div>
+			</div>
+		</div>
+
+		{include file="default/footer"}
+		{include file="default/js"}
+	</body>
+</html>
