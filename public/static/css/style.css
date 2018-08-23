@@ -145,3 +145,23 @@ a:focus {
 	padding: 20px;
 
 }
+
+.node-list {
+	background: #F8DDC8;
+}
+
+.user-node-info {
+	margin: 3% 2%;
+	padding: 20px;
+	background: rgba(255, 255, 255, 0.7);
+	border: 1px solid gainsboro;
+	border-left: 6px solid #1b809e;
+}
+
+.user-node-info > h4 {
+	color: #1b809e;
+}
+
+.node-panel {
+	font-size: small;
+}

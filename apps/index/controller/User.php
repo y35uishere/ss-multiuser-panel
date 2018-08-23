@@ -9,7 +9,13 @@ class User extends Base
 	
     public function index()
     {
+    	$this -> assign("user_name", session('username'));
         $this -> assign("page_title", "个人中心");
+        
+        if(isset($_REQUEST['checkin']))
+        	$this -> assign("checked", date("Y/m/d H:m:s"));
+        		
+        
         return $this -> fetch();
     }
     

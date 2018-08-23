@@ -12,10 +12,14 @@
 						</div>
 						
 						<div class="user-info col-lg-7">
-							<h2>$user，欢迎回来！</h2>
+							<h2>{$user_name}，欢迎回来！</h2>
 							<hr>
-							<p>签到</p>
-							<a class="btn btn-default pull-right" href="#">签到</a>
+							<p>上次签到时间：{if isset($checked)}{$checked}{/if}</p>
+							{if !isset($checked)}
+							<a class="btn btn-default pull-right" href="?checkin">签到</a>
+							{else}
+							<a class="btn btn-default pull-right" href="#">已签到</a>
+							{/if}
 						</div>
 					</div>
 				</div>
@@ -45,6 +49,53 @@
 						</div>
 					</div>
 					
+				</div>
+			</div>
+		</div>
+		
+		<div class="node-list">
+			<div class="container">
+				<div class="user-node-info">
+					<h4>账号信息</h4>
+					<p>端口：<code>123</code></p>
+					<p>连接密码：<code>123</code></p>
+					<a class="btn btn-danger" href="#">密码重置</a>
+				</div>
+				<div class="status">
+					<h3>节点信息</h3>
+					<hr>
+					<div class="panel panel-default node-panel">
+						<table class="table">
+							<thead>
+								<th>#</th>
+								<th>节点名称</th>
+								<th>节点地址</th>
+								<th>加密方式</th>
+							</thead>
+							<tbody>
+								<tr>
+									<td>123</td>
+									<td>123</td>
+									<td><code>123</code></td>
+									<td><code>123</code></td>
+								</tr>
+								<tr>
+									<td>123</td>
+									<td>123</td>
+									<td><code>123</code></td>
+									<td><code>123</code></td>
+								</tr>
+							</tbody>
+							
+						</table>
+						<hr>
+						<nav aria-label="node list">
+							<ul class="pager">
+								<li><a id="previous" href="javascript:void(0)">←</a></li>
+								<li><a id="next" href="javascript:void(0)">→</a></li>
+							</ul>
+						</nav>
+					</div>
 				</div>
 			</div>
 		</div>
