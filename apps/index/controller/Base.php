@@ -14,7 +14,7 @@ class Base extends Controller {
 			    'auto_start' => true,
 		]);
 		
-		if(session('?username')) {
+		if(session('?username') && session('?ssp_session')) {
 			$this -> assign('username', session('username'));
 			$this -> assign('is_login', 1);
 		}
@@ -27,6 +27,20 @@ class Base extends Controller {
 			return null;
 			
 		return md5('SsPaNeL'. $pass);
+	}
+	
+	protected function checkLogin() {
+		if(!session('?username') || !session('?ssp_session'))
+			return false;
+		
+		$query = db('user')->where('user_name', session('username'))->find();
+		
+		if(!isset($query))
+			return false;
+		else if(session('ssp_session') == $this->ssp_secret($query['user_name'] . $query['pass']))
+			return true;
+		
+		return false;
 	}
 	
 	

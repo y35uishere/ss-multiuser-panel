@@ -14,7 +14,10 @@
 						<div class="user-info col-lg-7">
 							<h2>{$user_name}，欢迎回来！</h2>
 							<hr>
+							<p>余额：{$info['money']} 元 <a class="btn btn-primary">充值</a></p>
+							<p>流量套餐：{$info['plan']} 计划，包含流量：{$info['transfer_enable']} MB</p>
 							<p>上次签到时间：{if isset($checked)}{$checked}{/if}</p>
+							<a class="btn btn-default" href="#">邀请好友</a>
 							{if !isset($checked)}
 							<a class="btn btn-default pull-right" href="?checkin">签到</a>
 							{else}
@@ -32,23 +35,25 @@
 					<h3>流量使用情况<a></a></h3>
 					<hr>
 					<p>剩余流量</p>
+					<p>{$total} GB</p>
 					<div class="progress">
-						<div class="progress-bar total-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%; min-width: 2em;">
-							60%
+						<div class="progress-bar total-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {$remain}%; min-width: 3em;">
+							{$remain}%
 						</div>
 					</div>
-					
+					<hr>
 					<p>使用流量</p>
-					<p>上行流量：，下行流量：</p>
+					<p>上行流量：{$upload} GB，下行流量：{$download} GB</p>
 					<div class="progress">
-						<div class="progress-bar progress-bar-success download-bar" style="width: 35%; min-width: 4em;">
-							下行流量
+						<div class="progress-bar progress-bar-success download-bar" style="width: {$remain_d}%; min-width: 2em;">
+							{$remain_d}%
 						</div>
-						<div class="progress-bar progress-bar-warning upload-bar" style="width: 40%; min-width: 4em;">
-						 	上行流量
+						<div class="progress-bar progress-bar-warning upload-bar" style="width: {$remain_u}%; min-width: 2em;">
+						 	{$remain_u}%
 						</div>
 					</div>
-					
+					<hr>
+					<p>上次使用时间：{$last_time}</p>
 				</div>
 			</div>
 		</div>
@@ -57,9 +62,9 @@
 			<div class="container">
 				<div class="user-node-info">
 					<h4>账号信息</h4>
-					<p>端口：<code>123</code></p>
-					<p>连接密码：<code>123</code></p>
-					<a class="btn btn-danger" href="#">密码重置</a>
+					<p>端口：<code>{$info['port']}</code></p>
+					<p>连接密码：<code>{$info['passwd']}</code></p>
+					<a class="btn btn-danger" href="{:url('index/user/reset_pwd')}">密码重置</a>
 				</div>
 				<div class="status">
 					<h3>节点信息</h3>
@@ -69,32 +74,38 @@
 							<thead>
 								<th>#</th>
 								<th>节点名称</th>
+								<th>节点描述</th>
 								<th>节点地址</th>
 								<th>加密方式</th>
+								<th>可用性</th>
 							</thead>
 							<tbody>
+								{if isset($node_list)}
+								{foreach $node_list as $key}
 								<tr>
-									<td>123</td>
-									<td>123</td>
-									<td><code>123</code></td>
-									<td><code>123</code></td>
+									<td>{$key['id']}</td>
+									<td>{$key['node_name']}</td>
+									<th>{$key['node_info']}</th>
+									<td><code>{$key['node_server']}</code></td>
+									<td><code>{$key['node_method']}</code></td>
+									<td>{$key['node_status']}</td>
 								</tr>
-								<tr>
-									<td>123</td>
-									<td>123</td>
-									<td><code>123</code></td>
-									<td><code>123</code></td>
-								</tr>
+								{/foreach}
+								{/if}
 							</tbody>
 							
 						</table>
-						<hr>
-						<nav aria-label="node list">
-							<ul class="pager">
-								<li><a id="previous" href="javascript:void(0)">←</a></li>
-								<li><a id="next" href="javascript:void(0)">→</a></li>
-							</ul>
-						</nav>
+						
+						<!--
+							<hr>
+                        	<nav aria-label="node list">
+								<ul class="pager">
+									<li><a id="previous" href="javascript:void(0)">←</a></li>
+									<li><a id="next" href="javascript:void(0)">→</a></li>
+								</ul>
+							</nav>
+                        -->
+						
 					</div>
 				</div>
 			</div>
