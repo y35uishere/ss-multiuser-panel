@@ -15,9 +15,7 @@ class User extends Base
     	$this -> assign("user_name", session('username'));
         $this -> assign("page_title", "个人中心");
         
-        if(isset($_REQUEST['checkin']))
-        	$this -> assign("checked", date("Y/m/d H:m:s"));
-        		
+	
         $query = db('user') -> where('user_name', session('username')) -> find();
         
         $this -> assign("info", $query);
@@ -28,12 +26,30 @@ class User extends Base
         $this -> assign("download", round($query['d'] / 1024 / 1024, 1));
         $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024, 1));
         $this -> assign("last_time", date('Y-m-d H:m:s',$query['t']));
-        
+		
+		$checked = array('t' => date("Y/m/d H:m:s", $query['last_check_in_time']), 'e' => ((time() - $query['last_check_in_time'] > 86400)?'1':'0'));
+		
+		$this -> assign("checked", $checked);
+		
         $node = db('ss_node') -> where('node_type < '.$query['type']) -> select();
         $this -> assign("node_list", $node);
         
         return $this -> fetch();
     }
+	
+	public function checkin()
+	{
+		if(!$this -> checkLogin())
+    		return $this->redirect('user/login');
+		
+		$query = db('user') -> where('user_name', session('username')) -> find();
+		
+		if(time() - $query['last_check_in_time'] > 86400)
+			db('user') -> where('user_name', session('username')) -> setField('last_check_in_time', time());
+        	
+		
+		return $this->redirect('user/login');
+	}
     
     public function setting()
     {

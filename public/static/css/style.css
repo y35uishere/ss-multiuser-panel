@@ -121,6 +121,18 @@ a:focus {
 }
 
 /* user panel */
+.bg-danger,
+.bg-warning,
+.bg-info,
+.bg-success,
+.bg-primary {
+	font-size: 15px;
+	padding: 15px;
+}
+
+.alert {
+	font-size: 15px;
+}
 
 
 .user-status {
