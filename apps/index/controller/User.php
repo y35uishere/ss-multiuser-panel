@@ -19,12 +19,12 @@ class User extends Base
         $query = db('user') -> where('user_name', session('username')) -> find();
         
         $this -> assign("info", $query);
-        $this -> assign("remain", 100 - round($query['u'] / $query['transfer_enable'] * 100 + $query['d'] / $query['transfer_enable'] * 100, 1));
-        $this -> assign("remain_u", round($query['u'] / $query['transfer_enable'] * 100, 1));
-        $this -> assign("remain_d", round($query['d'] / $query['transfer_enable'] * 100, 1));
-        $this -> assign("upload", round($query['u'] / 1024 / 1024, 1));
-        $this -> assign("download", round($query['d'] / 1024 / 1024, 1));
-        $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024, 1));
+        @$this -> assign("remain", 100 - round($query['u'] / $query['transfer_enable'] * 100 + $query['d'] / $query['transfer_enable'] * 100, 1));
+        @$this -> assign("remain_u", round($query['u'] / $query['transfer_enable'] * 100, 1));
+        @$this -> assign("remain_d", round($query['d'] / $query['transfer_enable'] * 100, 1));
+        $this -> assign("upload", round($query['u'] / 1024 / 1024 / 1024, 1));
+        $this -> assign("download", round($query['d'] / 1024 / 1024 / 1024, 1));
+        $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1));
         $this -> assign("last_time", date('Y-m-d H:m:s',$query['t']));
 		
 		$checked = array('t' => date("Y/m/d H:m:s", $query['last_check_in_time']), 'e' => ((time() - $query['last_check_in_time'] > 86400)?'1':'0'));
@@ -44,11 +44,20 @@ class User extends Base
 		
 		$query = db('user') -> where('user_name', session('username')) -> find();
 		
-		if(time() - $query['last_check_in_time'] > 86400)
+		if(time() - $query['last_check_in_time'] > 86400) {
 			db('user') -> where('user_name', session('username')) -> setField('last_check_in_time', time());
         	
+        	
+	        $r = rand(1, 100) * 1024 * 1024;
+			db('user') -> where('user_name', session('username')) -> setInc('transfer_enable', $r);
+			
+			$r /= (1024 * 1024);
+			echo "<script>alert('签到成功，获得 $r MB流量');window.location.href='" . url('user/index') . "';</script>";
+		}
+		else
+			return $this->redirect('user/index');
 		
-		return $this->redirect('user/login');
+		
 	}
     
     public function setting()
@@ -61,6 +70,7 @@ class User extends Base
         
         $query = db('user') -> where('user_name', session('username')) -> find();
         
+        $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1));
         $this -> assign("info", $query);
        	return $this -> fetch();		
     }

@@ -27,7 +27,7 @@
 							<h2>{$user_name}，欢迎回来！</h2>
 							<hr>
 							<p>余额：{$info['money']} 元 <a class="btn btn-primary">充值</a></p>
-							<p>流量套餐：{$info['plan']} 计划，包含流量：{$info['transfer_enable']} MB</p>
+							<p>流量套餐：{$info['plan']} 计划，包含流量：{$total} GB</p>
 							<p>上次签到时间：{if isset($checked['t'])}{$checked['t']}{/if}</p>
 							<a class="btn btn-default" href="#">邀请好友</a>
 							{if isset($checked['e']) && $checked['e'] == 1}
@@ -47,7 +47,7 @@
 					<h3>流量使用情况<a></a></h3>
 					<hr>
 					<p>剩余流量</p>
-					<p>{$total} GB</p>
+					<p>{$total} GB / {$total * $remain / 100} GB</p>
 					<div class="progress">
 						<div class="progress-bar total-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {$remain}%; min-width: 3em;">
 							{$remain}%
@@ -57,11 +57,11 @@
 					<p>使用流量</p>
 					<p>上行流量：{$upload} GB，下行流量：{$download} GB</p>
 					<div class="progress">
-						<div class="progress-bar progress-bar-success download-bar" style="width: {$remain_d}%; min-width: 2em;">
-							{$remain_d}%
+						<div class="progress-bar progress-bar-success download-bar" style="width: {$remain_u}%; min-width: 2em;">
+							{$remain_u}%
 						</div>
-						<div class="progress-bar progress-bar-warning upload-bar" style="width: {$remain_u}%; min-width: 2em;">
-						 	{$remain_u}%
+						<div class="progress-bar progress-bar-warning upload-bar" style="width: {$remain_d}%; min-width: 2em;">
+						 	{$remain_d}%
 						</div>
 					</div>
 					<hr>
