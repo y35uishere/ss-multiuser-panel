@@ -2,7 +2,7 @@
 <html>
 	{include file="default/head"}
 	<body>
-		{include file="default/header"}
+		{include file="default/nav"}
 		<div class="user-status">
 			<div class="container">
 				<div class="status">
@@ -57,11 +57,11 @@
 					<p>使用流量</p>
 					<p>上行流量：{$upload} GB，下行流量：{$download} GB</p>
 					<div class="progress">
-						<div class="progress-bar progress-bar-success download-bar" style="width: {$remain_u}%; min-width: 2em;">
-							{$remain_u}%
+						<div class="progress-bar progress-bar-success download-bar" style="width: {$progress_u}%; min-width: 2em;">
+							{$progress_u}%
 						</div>
-						<div class="progress-bar progress-bar-warning upload-bar" style="width: {$remain_d}%; min-width: 2em;">
-						 	{$remain_d}%
+						<div class="progress-bar progress-bar-warning upload-bar" style="width: {$progress_d}%; min-width: 2em;">
+						 	{$progress_d}%
 						</div>
 					</div>
 					<hr>

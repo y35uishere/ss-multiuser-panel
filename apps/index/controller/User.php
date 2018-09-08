@@ -20,8 +20,8 @@ class User extends Base
         
         $this -> assign("info", $query);
         @$this -> assign("remain", 100 - round($query['u'] / $query['transfer_enable'] * 100 + $query['d'] / $query['transfer_enable'] * 100, 1));
-        @$this -> assign("remain_u", round($query['u'] / $query['transfer_enable'] * 100, 1));
-        @$this -> assign("remain_d", round($query['d'] / $query['transfer_enable'] * 100, 1));
+        @$this -> assign("progress_u", round($query['u'] / $query['transfer_enable'] * 100, 1));
+        @$this -> assign("progress_d", round($query['d'] / $query['transfer_enable'] * 100, 1));
         $this -> assign("upload", round($query['u'] / 1024 / 1024 / 1024, 1));
         $this -> assign("download", round($query['d'] / 1024 / 1024 / 1024, 1));
         $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1));
@@ -99,7 +99,9 @@ class User extends Base
         	
         	
         	session('username', $_POST['id']);
+        	//将所有查询改为ssp_session
         	session('ssp_session', $this -> ssp_secret($_POST['id'] . $this -> ssp_secret($_POST['pw'])));
+        	
         	return $this->success("欢迎回来，" . $_POST['id'], 'user/index');
         }
         else if (empty($_POST['id']) || empty($_POST['pw'])) {

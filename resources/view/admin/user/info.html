@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	{include file="default/head"}
+	<body>
+		{include file="default/nav"}
+		<div class="control">
+			<div class="container">
+				<a class="btn btn-default" href="#">← 返回</a>
+			</div>
+		</div>
+		
+		<div class="main-info">
+			<div class="container">
+				{if $info['enable'] == 0}
+				<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							此账号已被停用
+				</div>
+				{/if}
+				<div class="panel panel-default">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>用户名：{$info['user_name']}</td>
+								<td>Email：{$info['email']}</td>
+								<td>余额：{$info['money']}</td>
+							</tr>
+							<tr>
+								<td>套餐：{$info['plan']}</td>
+								<td>上次使用时间：{:date("Y/m/d H:m:s", $info['t'])}</td>
+								<td>连接密码：{$info['passwd']}</td>
+							</tr>
+							<tr>
+								<td>总流量：{$trans['total']} G</td>
+								<td>已使用（上传）：{$trans['upload']} G</td>
+								<td>已使用（下载）：{$trans['download']} G</td>
+							</tr>
+							<tr>
+								<td>{if $info['uid'] != 1}<a href="#" class="btn btn-danger">删除账号</a>{/if}</td>
+								<td>{if $info['uid'] != 1}{if $info['enable'] == 0}<a href="#" class="btn btn-success">启用账号</a>{else}<a href="#" class="btn btn-danger">停用账号</a>{/if}{/if}</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		
+		
+		{include file="default/footer"}
+		{include file="default/js"}
+	</body>
+</html>

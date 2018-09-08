@@ -63,6 +63,7 @@ a:focus {
 .title {
 	color: #4578A6;
 	font-weight: 700;
+	cursor: context-menu;
 }
 
 /* index */
@@ -176,4 +177,22 @@ a:focus {
 
 .node-panel {
 	font-size: small;
+}
+
+/* Admin */
+
+.control {
+	background: #599A96;
+}
+
+.control > .container{
+	padding: 20px;
+}
+
+.main-info {
+	background: #DE7B54;
+}
+
+.main-info > .container{
+	padding: 20px;
 }
