@@ -57,7 +57,7 @@ return [
     // 默认的空控制器名
     'empty_controller'       => 'Error',
     // 操作方法后缀
-    'action_suffix'          => '',
+    'action_suffix'          => 'Action',
     // 自动搜索控制器
     'controller_auto_search' => false,
 
