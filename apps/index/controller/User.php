@@ -105,7 +105,7 @@ class User extends Base
         	return $this->success("欢迎回来，" . $_POST['id'], 'user/index');
         }
         else if (empty($_POST['id']) || empty($_POST['pw'])) {
-        	return $this->error('账号或密码不能为空', 'login');
+        	return $this->error('账号或密码错误', 'login');
         }
         
         

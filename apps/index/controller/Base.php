@@ -22,6 +22,11 @@ class Base extends Controller {
 
 	}
 	
+	public function _empty() {
+		return "404";
+		
+	}
+	
 	protected function ssp_secret($pass = '') {
 		if(empty($pass))
 			return null;

@@ -8,7 +8,7 @@ class Index extends Base
 	
 	
 	
-    public function index()
+    public function indexAction()
     {
     	$this->assign("page_title", "首页");
         return $this -> fetch();
