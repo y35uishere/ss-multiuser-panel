@@ -7,7 +7,7 @@ class User extends Base
 {
 	
 	
-    public function index()
+    public function indexAction()
     {
     	if(!$this -> checkLogin())
     		return $this->redirect('user/login');
@@ -37,7 +37,7 @@ class User extends Base
         return $this -> fetch();
     }
 	
-	public function checkin()
+	public function checkinAction()
 	{
 		if(!$this -> checkLogin())
     		return $this->redirect('user/login');
@@ -60,7 +60,7 @@ class User extends Base
 		
 	}
     
-    public function setting()
+    public function settingAction()
     {
     	if(!$this -> checkLogin())
     		return $this->redirect('user/login');
@@ -75,7 +75,7 @@ class User extends Base
        	return $this -> fetch();		
     }
     
-    public function login()
+    public function loginAction()
     {
     	
     	
@@ -111,19 +111,19 @@ class User extends Base
         
     }
     
-    public function register()
+    public function registerAction()
     {
 		$this -> assign("page_title", "用户注册");
 		return $this -> fetch();
 	}
 	
-	public function forgot()
+	public function forgotAction()
     {
 		$this -> assign("page_title", "找回密码");
 		return $this -> fetch();
 	}
 	
-	public function logout()
+	public function logoutAction()
 	{
 		session('username', null);
 		session('ssp_session', null);
@@ -131,7 +131,7 @@ class User extends Base
 		return $this->success('登出成功', 'login');
 	}
 	
-	public function reset_pwd()
+	public function reset_pwdAction()
 	{
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');

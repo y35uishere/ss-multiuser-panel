@@ -1,5 +1,5 @@
 .idea
-
+apps/config.php
 composer.lock
 
 *.log
