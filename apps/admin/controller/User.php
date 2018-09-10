@@ -6,7 +6,7 @@ use think\Controller;
 class User extends Controller 
 {
 	
-	public function info($id)
+	public function infoAction($id)
 	{
 		//防止SQL注入
 		$id = (int)$id;

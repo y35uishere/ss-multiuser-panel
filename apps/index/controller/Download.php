@@ -8,7 +8,7 @@ class Download extends Base
 	
 	
 	
-    public function index()
+    public function indexAction()
     {
     	$this->assign("page_title", "下载中心");
         return $this -> fetch();

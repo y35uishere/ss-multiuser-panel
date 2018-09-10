@@ -5,7 +5,7 @@ use think\Controller;
 
 class Index extends Controller
 {
-    public function index()
+    public function indexAction()
     {
         
         //判断是否登录
@@ -15,13 +15,13 @@ class Index extends Controller
         
     }
     
-    public function login()
+    public function loginAction()
     {
     	$this ->assign("page_title", "后台登录");
         return $this -> fetch();
     }
     
-    public function logout()
+    public function logoutAction()
     {
         return $this -> fetch();
     }
