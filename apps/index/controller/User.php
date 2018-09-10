@@ -84,27 +84,27 @@ class User extends Base
 		
     	$this -> assign("page_title", "用户登录");
     	
-        if(!isset($_POST['id']) && !isset($_POST['pw'])) 
+        if(!input('?post.id') && !input('?post.pw')) 
         	return $this -> fetch();
         	
         
-        else if (!empty($_POST['id']) && !empty($_POST['pw'])) {
-        	$query = db('user')->where('user_name', $_POST['id'])->find();
+        else if (!empty(input('post.id')) && !empty(input('post.pw'))) {
+        	$query = db('user')->where('user_name', input('post.id'))->find();
         	//$query = isset($query[0])?$query[0]:'';
         	
-        	if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret($_POST['pw']))
+        	if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret(input('post.pw')))
         		return $this -> error("账号或密码错误", "login");
 
         	
         	
         	
-        	session('username', $_POST['id']);
+        	session('username', input('post.id'));
         	//将所有查询改为ssp_session
-        	session('ssp_session', $this -> ssp_secret($_POST['id'] . $this -> ssp_secret($_POST['pw'])));
+        	session('ssp_session', $this -> ssp_secret(input('post.id') . $this -> ssp_secret($_POST['pw'])));
         	
-        	return $this->success("欢迎回来，" . $_POST['id'], 'user/index');
+        	return $this->success("欢迎回来，" . input('post.id'), 'user/index');
         }
-        else if (empty($_POST['id']) || empty($_POST['pw'])) {
+        else if (empty(input('post.id')) || empty(input('post.pw'))) {
         	return $this->error('账号或密码错误', 'login');
         }
         
@@ -146,5 +146,12 @@ class User extends Base
         
 		
 		return $this->success('重置成功', 'index');
+	}
+	
+	private function checkReg($id, $pwd)
+	{
+		//pwd弱口令禁止
+		//username禁止字段
+		return true;
 	}
 }
