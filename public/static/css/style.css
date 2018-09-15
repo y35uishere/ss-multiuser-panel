@@ -136,7 +136,8 @@ a:focus {
 }
 
 
-.user-status {
+.user-status,
+.invite-info {
 	background: #599A96;
 }
 
@@ -177,6 +178,16 @@ a:focus {
 
 .node-panel {
 	font-size: small;
+}
+
+.invite-info {
+	padding: 30px;
+	color: black;
+}
+
+.invite-info > .container {
+	background: white;
+	border-radius: 10px;
 }
 
 /* Admin */

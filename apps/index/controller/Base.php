@@ -48,5 +48,14 @@ class Base extends Controller {
 		return false;
 	}
 	
+	protected function getRandomStr($length = 0) {
+		$str = 'ABCDEFGHIJKLNMOPQRSTUVWXYZabcdefghijklnmopqrstuvwxyz0123456789';
+		$code = '';
+					
+		for($i = 0; $i < $length; $i++)
+			$code .= substr($str, rand(0,61), 1);
+			
+		return $code;
+	}
 	
 }

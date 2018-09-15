@@ -28,8 +28,8 @@
 							<hr>
 							<p>注册时间：{$info['reg_date']}</p>
 							<p>邮箱：{$info['email']} <a class="btn btn-default pull-right">修改邮箱</a></p>
-							<p>余额：{$info['money']} 元 <a class="btn btn-primary">充值</a></p>
-							<p>流量套餐：{$info['plan']} 计划，包含流量：{$total} GB</p>
+							<p>余额：{$info['money']} 元</p>
+							<p>流量套餐：{$info['plan']} 计划，包含流量：{$total} GB <a class="btn btn-primary" href="{:url('index/user/charge')}">充值</a></p>
 							<a href="{:url('index/user/reset_pwd')}" class="btn btn-danger">重置连接密码</a>
 							<a class="btn btn-default">重置登录密码</a>
 

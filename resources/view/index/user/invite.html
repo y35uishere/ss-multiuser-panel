@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	{include file="default/head"}
+	<body>
+		{include file="default/nav"}
+		<div class="invite-info">
+			<div class="container">
+				<h3>邀请列表</h3>
+				<hr>
+				<div class="panel panel-default node-panel">
+					<table class="table">
+						<thead>
+							<th>#</th>
+							<th>邀请码</th>
+							<th>使用人</th>
+						</thead>
+						<tbody>
+							{if isset($invite_list)}
+							{foreach $invite_list as $key}
+							<tr>
+								<td>{$key['id']}</td>
+								<td>{$key['code']}</td>
+								<th></th>
+							</tr>
+							{/foreach}
+							{/if}
+						</tbody>
+								
+					</table>
+					<hr>
+					
+					<p> <a class="btn btn-default" href="?add=1">申请邀请码</a> 还可以申请 {$remain} 个邀请码</p>
+				</div>
+				
+				
+			</div>
+		</div>
+		
+		
+		{include file="default/footer"}
+		{include file="default/js"}
+	</body>
+</html>

@@ -14,5 +14,14 @@ class Index extends Base
         return $this -> fetch();
     }
     
+    public function downloadAction()
+    {
+    	if(!$this -> checkLogin()) 
+    		return $this->redirect('user/login');
+    		
+    	$this->assign("page_title", "下载中心");
+        return $this -> fetch();
+    }
+    
     
 }

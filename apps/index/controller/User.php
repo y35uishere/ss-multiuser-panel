@@ -136,11 +136,7 @@ class User extends Base
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
 		
-		$str = 'ABCDEFGHIJKLNMOPQRSTUVWXYZabcdefghijklnmopqrstuvwxyz0123456789';
-		$pwd = '';
-		
-		for($i = 0; $i < 8; $i++)
-			$pwd .= substr($str, rand(0,61), 1);
+		$pwd = $this -> getRandomStr(8);
 		
 		db('user') -> where('user_name', session('username')) -> setField("passwd", $pwd);
         
@@ -153,5 +149,46 @@ class User extends Base
 		//pwd弱口令禁止
 		//username禁止字段
 		return true;
+	}
+	
+	
+	public function chargeAction()
+	{
+		if(!$this -> checkLogin()) 
+    		return $this->redirect('user/login');
+		
+		
+		$this -> assign("page_title", "充值");
+		return $this -> fetch();
+	}
+	
+	public function inviteAction($add = 0)
+	{
+		if(!$this -> checkLogin()) 
+    		return $this->redirect('user/login');
+    	
+    	$db = db('user');
+    	$query = $db -> where('user_name', session('username')) -> find();
+		
+		
+		if($add == 1 && $query['invite_num'] <= 2) {
+			$code = $this -> getRandomStr(27);
+				
+			db('invite_code') -> insert(['code' => $code, 'user' => 0, 'invite_user' => $query['uid']]);
+			
+			$db -> where('user_name', session('username')) -> setInc('invite_num', 1);
+			
+			return $this->success('成功', 'invite', 0, 1);
+		}
+		else if($add == 1)
+			return $this->error('错误', 'invite', 0, 1);
+			
+		$invite_list = db('invite_code') -> where('invite_user', $query['uid']) -> select();
+		
+		$this -> assign("remain", 3 - $query['invite_num']);
+		$this -> assign("invite_list", $invite_list);
+		$this -> assign("page_title", "邀请好友");
+		return $this -> fetch();
+
 	}
 }
