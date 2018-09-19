@@ -37,11 +37,11 @@
 					
 				</div>
 				<div class="col-md-4">
-					<p>流量充值</p>
+					<h2>流量充值</h2>
 					<hr />
 					<form action="{:url('index/user/charge')}" method="post">
 						<input class="hidden" name="type" value="2" />
-						<h4>剩余流量：{$remain} G</h4>
+						<p>剩余流量：{$remain} G</p>
 						
 						<div class="btn-group" role="group">
 							<p>充值流量：</p>
@@ -62,7 +62,7 @@
 							</label>
 						</div>
 						<p>支付方式：</p>
-						<p>钱包余额</p>
+						<p>钱包余额 ￥{$info['money']}</p>
 						<br />
 						<p>小计： <span id="total-band">￥0</span></p>
 						
