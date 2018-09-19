@@ -137,7 +137,8 @@ a:focus {
 
 
 .user-status,
-.invite-info {
+.invite-info,
+.recharge-main {
 	background: #599A96;
 }
 
@@ -176,19 +177,48 @@ a:focus {
 	color: #1b809e;
 }
 
-.node-panel {
+.node-panel,
+.invite-panel {
 	font-size: small;
 }
 
+.recharge-main,
 .invite-info {
 	padding: 30px;
 	color: black;
 }
 
-.invite-info > .container {
+.invite-info > .container,
+.recharge-main > .container {
 	background: white;
 	border-radius: 10px;
+	padding: 20px;
 }
+
+.invite-panel {
+	padding: 10px;
+}
+
+.recharge-main {
+	font-size: 20px;
+}
+
+#alipay {
+	background: url("../img/alipay.png") #d6d6d6;
+	background-size: contain;
+}
+
+.pay-logo {
+	width: 140px;
+	height: 50px;
+	border: 1px solid;
+}
+
+#total-money,
+#total-band {
+	color: darkred;
+}
+
 
 /* Admin */
 

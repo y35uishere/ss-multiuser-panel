@@ -3,12 +3,92 @@
 	{include file="default/head"}
 	<body>
 		{include file="default/nav"}
-		
+		<div class="recharge-main">
+			<div class="container">
+				<div class="col-md-4">
+					<h2>钱包充值</h2>
+					<hr />
+					<form action="{:url('index/user/charge')}" method="post">
+						<input class="hidden" name="type" value="1" />
+						<p>余额：{$info['money']} 元</p>
+						
+						
+						<div class="btn-group" role="group">
+							<p>充值金额：</p>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="money" value="5" />￥5
+							</label>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="money" value="10" />￥10
+							</label>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="money" value="50" />￥50
+							</label>
+						</div>
+						<p>支付方式：</p>
+						<div id="alipay" class="pay-logo"></div>
+						<br />
+						<p>小计： <span id="total-money">￥0</span></p>
+						<hr />
+						<input class="btn btn-success" type="submit" value="充值！"/>
+					</form>
+				</div>
+				<div class="col-md-2 divider">
+					
+				</div>
+				<div class="col-md-4">
+					<p>流量充值</p>
+					<hr />
+					<form action="{:url('index/user/charge')}" method="post">
+						<input class="hidden" name="type" value="2" />
+						<h4>剩余流量：{$remain} G</h4>
+						
+						<div class="btn-group" role="group">
+							<p>充值流量：</p>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="band" value="1" />500M
+							</label>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="band" value="1.5" />1G
+							</label>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="band" value="4" />5G
+							</label>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="band" value="7" />10G
+							</label>
+							<label class="btn btn-default">
+								<input class="radio-inline" type="radio" name="band" value="30" />50G
+							</label>
+						</div>
+						<p>支付方式：</p>
+						<p>钱包余额</p>
+						<br />
+						<p>小计： <span id="total-band">￥0</span></p>
+						
+						<hr />
+						<input class="btn btn-success" type="submit" value="充值！"/>
+					</form>
+				</div>
+			</div>
+		</div>
 		
 		
 		
 		
 		{include file="default/footer"}
 		{include file="default/js"}
+		<script type="text/javascript">
+	
+			$("input[name='band']").on("click", function(){
+				$("#total-band").html("￥" + $("input[name='band']:checked").val());
+			});
+			
+			$("input[name='money']").on("click", function(){
+				$("#total-money").html("￥" + $("input[name='money']:checked").val());
+			});
+		
+			
+		</script>
 	</body>
 </html>

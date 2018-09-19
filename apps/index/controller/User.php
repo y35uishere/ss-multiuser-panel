@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\index\controller\Base;
+use think\Request;
 
 class User extends Base
 {
@@ -42,14 +43,15 @@ class User extends Base
 		if(!$this -> checkLogin())
     		return $this->redirect('user/login');
 		
-		$query = db('user') -> where('user_name', session('username')) -> find();
+		$db = db('user');
+		$query = $db -> where('user_name', session('username')) -> find();
 		
 		if(time() - $query['last_check_in_time'] > 86400) {
-			db('user') -> where('user_name', session('username')) -> setField('last_check_in_time', time());
+			$db -> where('user_name', session('username')) -> setField('last_check_in_time', time());
         	
         	
 	        $r = rand(1, 100) * 1024 * 1024;
-			db('user') -> where('user_name', session('username')) -> setInc('transfer_enable', $r);
+			$db -> where('user_name', session('username')) -> setInc('transfer_enable', $r);
 			
 			$r /= (1024 * 1024);
 			echo "<script>alert('签到成功，获得 $r MB流量');window.location.href='" . url('user/index') . "';</script>";
@@ -156,6 +158,17 @@ class User extends Base
 	{
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
+		
+		if (Request::instance()->isPost()) {
+			return $_POST['a'];
+		}
+		
+		$db = db('user');
+    	$query = $db -> where('user_name', session('username')) -> find();
+    	
+    	$this -> assign("info", $query);
+		
+		$this -> assign("remain", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1) - round($query['u'] / 1024 / 1024 / 1024, 1) - round($query['d'] / 1024 / 1024 / 1024, 1));
 		
 		
 		$this -> assign("page_title", "充值");

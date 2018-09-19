@@ -7,7 +7,7 @@
 			<div class="container">
 				<h3>邀请列表</h3>
 				<hr>
-				<div class="panel panel-default node-panel">
+				<div class="panel panel-default invite-panel">
 					<table class="table">
 						<thead>
 							<th>#</th>
@@ -29,7 +29,12 @@
 					</table>
 					<hr>
 					
-					<p> <a class="btn btn-default" href="?add=1">申请邀请码</a> 还可以申请 {$remain} 个邀请码</p>
+					<p>
+						{if $remain != 0}
+							<a class="btn btn-default" href="?add=1">申请邀请码</a>
+						{/if}
+						 还可以申请 {$remain} 个邀请码
+					</p>
 				</div>
 				
 				
