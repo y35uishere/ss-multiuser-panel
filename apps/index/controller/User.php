@@ -158,10 +158,7 @@ class User extends Base
 	{
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
-		
-		if (Request::instance()->isPost()) {
-			return $_POST['a'];
-		}
+
 		
 		$db = db('user');
     	$query = $db -> where('user_name', session('username')) -> find();
@@ -203,5 +200,15 @@ class User extends Base
 		$this -> assign("page_title", "邀请好友");
 		return $this -> fetch();
 
+	}
+	
+	public function checkoutAction()
+	{
+		if (Request::instance()->isPost()) {
+			return $_POST['a'];
+		}
+		
+		return 'wrong argument'; 
+		
 	}
 }

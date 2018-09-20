@@ -8,7 +8,7 @@
 				<div class="col-md-4">
 					<h2>钱包充值</h2>
 					<hr />
-					<form action="{:url('index/user/charge')}" method="post">
+					<form action="{:url('index/user/checkout')}" method="post">
 						<input class="hidden" name="type" value="1" />
 						<p>余额：{$info['money']} 元</p>
 						
@@ -39,7 +39,7 @@
 				<div class="col-md-4">
 					<h2>流量充值</h2>
 					<hr />
-					<form action="{:url('index/user/charge')}" method="post">
+					<form action="{:url('index/user/checkout')}" method="post">
 						<input class="hidden" name="type" value="2" />
 						<p>剩余流量：{$remain} G</p>
 						
