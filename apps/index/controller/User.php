@@ -133,7 +133,7 @@ class User extends Base
 		return $this->success('登出成功', 'login');
 	}
 	
-	public function reset_pwdAction()
+	public function resetpwdAction()
 	{
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
@@ -205,7 +205,25 @@ class User extends Base
 	public function checkoutAction()
 	{
 		if (Request::instance()->isPost()) {
-			return $_POST['a'];
+			$order = $this-> getOrderNo();
+			
+			
+			if(input('?post.money'))
+				return json([
+							'order_no' => $order,
+							'money' => input('post.money'),
+							'type' => input('post.type'),
+							'timestamp' => date('YmdHis'),
+							'token' => $this -> getToken($order, 1, input('post.money')),
+						]);
+			else if(input('?post.band'))
+				return json([
+							'order_no' => $order,
+							'money' => input('post.band'),
+							'type' => input('post.type'),
+							'timestamp' => date('YmdHis'),
+							'token' => $this -> getToken($order, 2, input('post.money')),
+						]);
 		}
 		
 		return 'wrong argument'; 

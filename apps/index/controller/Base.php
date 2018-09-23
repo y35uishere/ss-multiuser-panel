@@ -58,4 +58,11 @@ class Base extends Controller {
 		return $code;
 	}
 	
+	protected function getOrderNo() {
+		return date('YmdHis') . substr('00000'. rand(0,999999), -6);
+	}
+	
+	protected function getToken($order = '', $type = '', $money = '') {
+		return md5('SsPaNeL'. $order . $type . $money);
+	}
 }
