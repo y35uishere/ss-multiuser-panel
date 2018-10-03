@@ -9,17 +9,17 @@
 					<form action="{:url('index/user/register')}" method="post">
 						<h1>用户注册</h1>
 						<hr />
-						<input name="id" class="form-control" placeholder="账号" required />
+						<input id="id" name="id" class="form-control" placeholder="账号" required />
 						<br />
-						<input name="email" class="form-control" type="email" placeholder="电子邮件" maxlength="32" required />
+						<input id="email" name="email" class="form-control" type="email" placeholder="电子邮件" maxlength="32" required />
 						<br />
-						<input name="pw1" type="password" class="form-control" placeholder="密码" maxlength="20" required />
+						<input id="pw1" name="pw1" type="password" class="form-control" placeholder="密码" maxlength="20" required />
 						<br />
-						<input name="pw2" type="password" class="form-control" placeholder="重复密码" maxlength="20" required />
+						<input id="pw2" name="pw2" type="password" class="form-control" placeholder="重复密码" maxlength="20" required />
 						<br />
-						<input name="key" type="text" class="form-control" placeholder="邀请码" maxlength="20" required />
+						<input id="key" name="key" type="text" class="form-control" placeholder="邀请码" maxlength="27" required />
 						<hr />
-						<input value="注册" class="btn btn-default" type="submit" />
+						<input id="reg" value="注册" class="btn btn-default" type="submit" />
 						<br />
 						
 					</form>
@@ -28,12 +28,17 @@
 					
 				</div>
 				<div class="col-lg-4">
-					<img alt="login logo" src="__IMG__/reg.png">
+					<img  class="img-responsive" alt="login logo" src="__IMG__/reg.png">
 				</div>
 	
 			</div>
 		</div>
 		{include file="default/footer"}
 		{include file="default/js"}
+		<script type="application/javascript">
+			$("#reg").on("click", function(){
+				alert("1");
+			})
+		</script>
 	</body>
 </html>

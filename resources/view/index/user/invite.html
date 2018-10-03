@@ -10,19 +10,17 @@
 				<div class="panel panel-default invite-panel">
 					<table class="table">
 						<thead>
-							<th>#</th>
 							<th>邀请码</th>
 							<th>使用人</th>
 						</thead>
 						<tbody>
 							{if isset($invite_list)}
-							{foreach $invite_list as $key}
-							<tr>
-								<td>{$key['id']}</td>
-								<td>{$key['code']}</td>
-								<th></th>
-							</tr>
-							{/foreach}
+								{foreach $invite_list as $key}
+									<tr>
+										<td>{$key['code']}</td>
+										<th></th>
+									</tr>
+								{/foreach}
 							{/if}
 						</tbody>
 								

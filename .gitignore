@@ -1,7 +1,7 @@
 .idea
 apps/config.php
 composer.lock
-
+.project
 *.log
 
 

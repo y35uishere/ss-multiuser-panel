@@ -9,9 +9,9 @@
 					<form action="{:url('index/user/login')}" method="post">
 						<h1>用户登录</h1>
 						<hr />
-						<input name="id" class="form-control" placeholder="账号" required />
+						<input id="id" name="id" class="form-control" placeholder="账号" required />
 						<br />
-						<input name="pw" type="password" class="form-control" placeholder="密码" maxlength="20" required />
+						<input id="pw" name="pw" type="password" class="form-control" placeholder="密码" maxlength="20" required />
 						<br />
 						<input value="登录" class="btn btn-default" type="submit" />
 						<div class="pull-right">
@@ -26,7 +26,7 @@
 					
 				</div>
 				<div class="col-lg-4">
-					<img alt="login logo" src="__IMG__/userlogin.png">
+					<img class="img-responsive" alt="login logo" src="__IMG__/userlogin.png">
 				</div>
 			</div>
 		</div>

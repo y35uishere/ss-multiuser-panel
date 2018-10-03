@@ -115,6 +115,9 @@ class User extends Base
     
     public function registerAction()
     {
+    	if($this -> checkLogin()) 
+    		return $this->redirect('user/index');
+    	
 		$this -> assign("page_title", "用户注册");
 		return $this -> fetch();
 	}
