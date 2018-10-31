@@ -2,7 +2,7 @@
 
 ### based on ThinkPHP
 
-- [x] Frontend
+[x] Frontend
 - - [x] index
 - - - [x] login
 - - - [x] register
