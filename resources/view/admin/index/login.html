@@ -6,12 +6,12 @@
 		<div class="login">
 			<div class="container">
 				<div class="col-lg-4">
-					<form>
+					<form method="post" action="{:url('index/login')}">
 						<h1>后台登录</h1>
 						<hr />
-						<input class="form-control" placeholder="账号" />
+						<input class="form-control" placeholder="账号" name="id" required/>
 						<br />
-						<input type="password" class="form-control" placeholder="密码" maxlength="20"/>
+						<input type="password" class="form-control" placeholder="密码" maxlength="20" name="pw" required/>
 						<br />
 						<input value="登录" class="btn btn-default" type="submit" />
 					</form>

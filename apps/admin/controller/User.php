@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use think\Controller;
 
-class User extends Controller 
+class User extends Base
 {
 	
 	public function infoAction($id)
@@ -26,9 +26,9 @@ class User extends Controller
 		$this -> assign("page_title", "用户详情");
 		return $this -> fetch();
 	}
-	
-	
-	
+
+
+
 	
 	
 	

@@ -3,24 +3,55 @@ namespace app\admin\controller;
 
 use think\Controller;
 
-class Index extends Controller
+class Index extends Base
 {
     public function indexAction()
     {
+
         
         //判断是否登录
-        if(true) {
+        if(!$this->checkLogin()) {
         	return $this -> redirect('index/login');
         }
+
+
+
         
     }
-    
+
+
     public function loginAction()
     {
-    	$this ->assign("page_title", "后台登录");
-        return $this -> fetch();
+        if($this -> checkLogin())
+            return $this->redirect('index');
+
+        $this ->assign("page_title", "后台登录");
+
+        if(!input('?post.id') && !input('?post.pw'))
+            return $this -> fetch();
+        else if (!empty(input('post.id')) && !empty(input('post.pw'))) {
+            $query = \think\Db::query('select * from ss_user_admin left JOIN user on (ss_user_admin.uid = user.uid) where user_name = "' . input('post.id') . '"')[0];
+
+
+            //$query = isset($query[0])?$query[0]:'';
+
+            if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret(input('post.pw')))
+                return $this -> error("账号或密码错误", "login");
+
+
+            session('username', input('post.id'));
+            //将所有查询改为ssp_session
+            session('ssp_session', $this -> ssp_secret(input('post.id') . $this -> ssp_secret($_POST['pw'])));
+
+            return $this->success("欢迎回来，" . input('post.id'), 'index');
+        }
+        else if (empty(input('post.id')) || empty(input('post.pw'))) {
+            return $this->error('账号或密码错误', 'login');
+        }
+
+
     }
-    
+
     public function logoutAction()
     {
         return $this -> fetch();
