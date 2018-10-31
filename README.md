@@ -14,7 +14,7 @@
 
 - [ ] User
 
-- [ ] register / login
+- [x] register / login
 
 - [ ] validation
 
