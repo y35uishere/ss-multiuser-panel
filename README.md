@@ -13,15 +13,28 @@
 
 
 - [ ] User
-      - [x] register / login
-            - [ ] validation
-      - [x] node list
-      - [x] recharge
-            - [ ] Youzan SDK
-      - [x] info
-      - [x] download
-      - [ ] email
+
+- [ ] register / login
+
+- [ ] validation
+
+- [x] node list
+
+- [x] recharge
+
+- [ ] Youzan SDK
+
+- [x] info
+
+- [x] download
+
+- [ ] email
+
+      ​
+
 - [ ] Admin
-      - [ ] user manage
-      - [ ] node manage
+
+- [ ] user manage
+
+- [ ] node manage
 
