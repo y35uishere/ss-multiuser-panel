@@ -27,7 +27,7 @@
 							<h2>{$user_name}，欢迎回来！</h2>
 							<hr>
 							<p>余额：{$info['money']} 元</p>
-							<p>流量套餐：{$info['plan']} 计划，包含流量：{$total} GB <a class="btn btn-primary" href="{:url('index/user/charge')}">充值</a></p>
+							<p>流量套餐：{$info['plan']} 计划，包含流量：{$total} GB <a class="btn btn-success" href="{:url('index/user/charge')}">充值</a></p>
 							<p>上次签到时间：{if isset($checked['t'])}{$checked['t']}{/if}</p>
 							<a class="btn btn-default" href="{:url('index/user/invite')}">邀请好友</a>
 							{if isset($checked['e']) && $checked['e'] == 1}
