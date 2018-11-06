@@ -91,7 +91,8 @@ class User extends Base
         	
         
         else if (!empty(input('post.id')) && !empty(input('post.pw'))) {
-        	$query = db('user')->where('user_name', input('post.id'))->find();
+            $db = db('user');
+        	$query = $db->where('user_name', input('post.id'))->find();
         	//$query = isset($query[0])?$query[0]:'';
         	
         	if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret(input('post.pw')))
@@ -103,7 +104,9 @@ class User extends Base
         	session('username', input('post.id'));
         	//将所有查询改为ssp_session
         	session('ssp_session', $this -> ssp_secret(input('post.id') . $this -> ssp_secret($_POST['pw'])));
-        	
+            //记录用户登录
+            $db -> where('user_name', session('username')) -> setField('last_login_time', time());
+
         	return $this->success("欢迎回来，" . input('post.id'), 'user/index');
         }
         else if (empty(input('post.id')) || empty(input('post.pw'))) {
@@ -140,10 +143,18 @@ class User extends Base
 	{
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
+
+		$last_reset = time() - db('user') -> field("last_rest_pass_time")-> where('user_name', session('username')) -> find()['last_rest_pass_time'];
+
+        if($last_reset < 200){
+            return $this->error( '密码更改频繁，请 ' . (200 - $last_reset).' 秒后再试。' , 'index');
+        }
 		
 		$pwd = $this -> getRandomStr(8);
 		
 		db('user') -> where('user_name', session('username')) -> setField("passwd", $pwd);
+
+        db('user') -> where('user_name', session('username')) -> setField("last_rest_pass_time", time());
         
 		
 		return $this->success('重置成功', 'index');
