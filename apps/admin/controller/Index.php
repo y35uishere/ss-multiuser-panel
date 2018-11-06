@@ -7,16 +7,26 @@ class Index extends Base
 {
     public function indexAction()
     {
-
-        
         //判断是否登录
         if(!$this->checkLogin()) {
         	return $this -> redirect('index/login');
         }
+        //用户统计信息
+        $info = \think\Db::query('select count(*) as user, sum(money) as money from user;')[0];
+        //在线用户
+        $info =array_merge($info, \think\Db::query ('select count(*) as online from user where ('.time().' - t) < 100')[0]);
+        //节点数
+        $info = array_merge($info, \think\Db::query('select count(*) as node from ss_node;')[0]);
 
+        $node = db('ss_node')  -> select();
+        $user = db('user')-> select();
 
-
-        
+        $this -> assign("node_list", $node);
+        $this -> assign("user_list", $user);
+        $this -> assign('user_name', session('username'));
+        $this -> assign('info', $info);
+        $this -> assign('page_title', '后台管理');
+        return $this -> fetch();
     }
 
 

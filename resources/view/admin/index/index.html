@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+{include file="default/head"}
+<body>
+{include file="default/nav"}
+<div class="admin-main">
+    <div class="container">
+        <div class="status">
+            <div class="container">
+                <div class="col-lg-3">
+                    <img src="__IMG__/head.jpg" class="img-circle img-responsive" style="display: inline-block;">
+                </div>
+
+                <div class="user-info col-lg-7">
+                    <h2>{$user_name}，欢迎回来！</h2>
+                    <hr>
+                    <p>总用户数：{$info['user']} 人，当前在线用户数：{$info['online']} 人</p>
+                    <p>平台总余额：{$info['money']} 元 </p>
+                    <p>节点数：{$info['node']} 个 </p>
+                    <a class="btn btn-default" href="{:url('index/user/invite')}">邀请好友</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="admin-user-info">
+    <div class="container">
+        <div class="status">
+            <h3>用户信息</h3>
+            <hr>
+            <div class="panel panel-default user-panel">
+                <table class="table">
+                    <thead>
+                    <th>#</th>
+                    <th>用户名</th>
+                    <th>E-Mail</th>
+                    <th>连接密码</th>
+                    <th>端口</th>
+                    <th>可用性</th>
+                    </thead>
+                    <tbody>
+                    {if isset($user_list)}
+                    {foreach $user_list as $key}
+                    <tr>
+                        <td>{$key['uid']}</td>
+                        <td>{$key['user_name']}</td>
+                        <th>{$key['email']}</th>
+                        <td><code>{$key['passwd']}</code></td>
+                        <td><code>{$key['port']}</code></td>
+                        <td>{$key['switch']}</td>
+                    </tr>
+                    {/foreach}
+                    {/if}
+                    </tbody>
+
+                </table>
+
+                <!--
+                    <hr>
+                    <nav aria-label="node list">
+                        <ul class="pager">
+                            <li><a id="previous" href="javascript:void(0)">←</a></li>
+                            <li><a id="next" href="javascript:void(0)">→</a></li>
+                        </ul>
+                    </nav>
+-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="node-list">
+    <div class="container">
+        <div class="status">
+            <h3>节点信息</h3>
+            <hr>
+            <div class="panel panel-default node-panel">
+                <table class="table">
+                    <thead>
+                    <th>#</th>
+                    <th>节点名称</th>
+                    <th>节点描述</th>
+                    <th>节点地址</th>
+                    <th>加密方式</th>
+                    <th>可用性</th>
+                    </thead>
+                    <tbody>
+                    {if isset($node_list)}
+                    {foreach $node_list as $key}
+                    <tr>
+                        <td>{$key['id']}</td>
+                        <td>{$key['node_name']}</td>
+                        <th>{$key['node_info']}</th>
+                        <td><code>{$key['node_server']}</code></td>
+                        <td><code>{$key['node_method']}</code></td>
+                        <td>{$key['node_status']}</td>
+                    </tr>
+                    {/foreach}
+                    {/if}
+                    </tbody>
+
+                </table>
+
+                <!--
+                    <hr>
+                    <nav aria-label="node list">
+                        <ul class="pager">
+                            <li><a id="previous" href="javascript:void(0)">←</a></li>
+                            <li><a id="next" href="javascript:void(0)">→</a></li>
+                        </ul>
+                    </nav>
+-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="default/footer"}
+{include file="default/js"}
+</body>
+</html>

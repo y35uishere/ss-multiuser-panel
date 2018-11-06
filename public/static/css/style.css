@@ -222,7 +222,8 @@ a:focus {
 
 /* Admin */
 
-.control {
+.control,
+.admin-main{
 	background: #599A96;
 }
 
@@ -230,10 +231,15 @@ a:focus {
 	padding: 20px;
 }
 
-.main-info {
+.main-info,
+.admin-user-info {
 	background: #DE7B54;
 }
 
 .main-info > .container{
 	padding: 20px;
+}
+
+.user-panel{
+	font-size: small;
 }
