@@ -23,7 +23,7 @@ class Base extends Controller {
 
         if(session('?username') && session('?ssp_session')) {
             $this -> assign('username', session('username'));
-            $this -> assign('is_login', 1);
+            $this -> assign('is_login_admin', 1);
         }
 
 
