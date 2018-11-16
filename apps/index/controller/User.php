@@ -167,7 +167,10 @@ class User extends Base
 		return true;
 	}
 	
-	
+	public function changepwdAction()
+    {
+        return ;
+    }
 	public function chargeAction()
 	{
 		if(!$this -> checkLogin()) 
