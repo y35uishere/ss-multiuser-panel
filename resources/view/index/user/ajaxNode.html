@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+    <th>#</th>
+    <th>节点名称</th>
+    <th>节点描述</th>
+    <th>节点地址</th>
+    <th>加密方式</th>
+    <th>可用性</th>
+    </thead>
+    <tbody>
+
+    {volist name='node' id='vo'}
+    <tr>
+        <td>{$vo.id}</td>
+        <td>{$vo.node_name}</td>
+        <td>{$vo.node_info}</td>
+        <td><code>{$vo.node_server}</code></td>
+        <td><code>{$vo.node_method}</code></td>
+        <td>{$vo.node_status}</td>
+    </tr>
+    {/volist}
+
+
+    </tbody>
+
+</table>
+<hr>
+{$page}

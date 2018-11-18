@@ -31,12 +31,25 @@ class User extends Base
 		$checked = array('t' => date("Y/m/d H:m:s", $query['last_check_in_time']), 'e' => ((time() - $query['last_check_in_time'] > 86400)?'1':'0'));
 		
 		$this -> assign("checked", $checked);
+
 		
         $node = db('ss_node') -> where('node_type < '.$query['type']) -> paginate(2);
 
         $page = $node ->render();
+
+        if($this->request->isAjax()) {
+
+            $this -> assign("node", $node);
+            $this -> assign("page", $page);
+            $html = $this->fetch('User/ajaxNode');
+            return $html;
+        }
+
         $this -> assign("node", $node);
         $this -> assign("page", $page);
+
+
+
         return $this -> fetch();
     }
 	

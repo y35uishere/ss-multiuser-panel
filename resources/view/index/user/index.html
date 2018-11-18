@@ -82,7 +82,7 @@
 				<div class="status">
 					<h3>节点信息</h3>
 					<hr>
-					<div class="panel panel-default node-panel">
+					<div class="panel panel-default node-panel" id="list">
 						<table class="table">
 							<thead>
 								<th>#</th>
@@ -111,15 +111,6 @@
 						</table>
 						<hr>
 							{$page}
-						<!--
-							<hr>
-                        	<nav aria-label="node list">
-								<ul class="pager">
-									<li><a id="previous" href="javascript:void(0)">←</a></li>
-									<li><a id="next" href="javascript:void(0)">→</a></li>
-								</ul>
-							</nav>
-                        -->
 						
 					</div>
 				</div>
@@ -129,5 +120,25 @@
 
 		{include file="default/footer"}
 		{include file="default/js"}
+
+		<script>
+            $(function(){
+                $("#list").on('click', ".pagination li a",function(){
+                    var pageObj = this;
+                    var url = pageObj.href;
+                    $.ajax({
+                        type:'get',
+                        url:url,
+                        success:function(res){
+                            $("#list").html(res);
+
+                        }
+
+                    });
+                    return false;
+                })
+            })
+
+		</script>
 	</body>
 </html>
