@@ -93,22 +93,24 @@
 								<th>可用性</th>
 							</thead>
 							<tbody>
-								{if isset($node_list)}
-								{foreach $node_list as $key}
-								<tr>
-									<td>{$key['id']}</td>
-									<td>{$key['node_name']}</td>
-									<th>{$key['node_info']}</th>
-									<td><code>{$key['node_server']}</code></td>
-									<td><code>{$key['node_method']}</code></td>
-									<td>{$key['node_status']}</td>
-								</tr>
-								{/foreach}
-								{/if}
+
+								{volist name='node' id='vo'}
+									<tr>
+										<td>{$vo.id}</td>
+										<td>{$vo.node_name}</td>
+										<td>{$vo.node_info}</td>
+										<td><code>{$vo.node_server}</code></td>
+										<td><code>{$vo.node_method}</code></td>
+										<td>{$vo.node_status}</td>
+									</tr>
+								{/volist}
+
+
 							</tbody>
-							
+
 						</table>
-						
+						<hr>
+							{$page}
 						<!--
 							<hr>
                         	<nav aria-label="node list">

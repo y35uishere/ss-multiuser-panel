@@ -9,7 +9,12 @@
 body {
 	color: #888;
 }
-    
+
+.pagination {
+	padding-left: initial !important;
+	margin: 0 auto !important;
+}
+
 a {
 	color: #4578A6;
     opacity: 0.8;

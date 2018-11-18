@@ -32,9 +32,11 @@ class User extends Base
 		
 		$this -> assign("checked", $checked);
 		
-        $node = db('ss_node') -> where('node_type < '.$query['type']) -> select();
-        $this -> assign("node_list", $node);
-        
+        $node = db('ss_node') -> where('node_type < '.$query['type']) -> paginate(2);
+
+        $page = $node ->render();
+        $this -> assign("node", $node);
+        $this -> assign("page", $page);
         return $this -> fetch();
     }
 	
