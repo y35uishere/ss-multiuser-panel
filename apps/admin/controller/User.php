@@ -6,10 +6,13 @@ use think\Controller;
 class User extends Base
 {
 	
-	public function infoAction($id)
+	public function infoAction()
 	{
+        if(!input('?id'))
+            return $this->error('用户不存在','index/index', 0, 3);
+
 		//防止SQL注入
-		$id = (int)$id;
+		$id = (int)input('id');
 		
 		$query = db('user') -> where('uid', $id) -> find();
 		
