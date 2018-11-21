@@ -50,6 +50,7 @@
                         <td><code>{$key['passwd']}</code></td>
                         <td><code>{$key['port']}</code></td>
                         <td>{$key['switch']}</td>
+                        <td><a href="{:url('admin/user/info', 'id='.$key['uid'])}" class="btn btn-primary">⚙ 管理</a></td>
                     </tr>
                     {/foreach}
                     {/if}
