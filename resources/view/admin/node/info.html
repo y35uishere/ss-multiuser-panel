@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+{include file="default/head"}
+<body>
+{include file="default/nav"}
+<div class="control">
+    <div class="container">
+        <a class="btn btn-default" href="javascript:(window.history.back());">← 返回</a>
+    </div>
+</div>
+
+<div class="main-info">
+    <div class="container">
+        <div class="status">
+            <form action="{:url('admin/node/handler')}" method="post">
+                <input name="type" value="{$type}" hidden>
+                <p>节点名称</p>
+                <input name="node_name" value="{$info['node_name']}" class="form-control" placeholder="节点名称" required>
+                <br>
+                <p>节点描述</p>
+                <input name="node_info" value="{$info['node_info']}" class="form-control" placeholder="节点描述" required>
+                <br>
+                <p>节点地址</p>
+                <input name="node_server" value="{$info['node_server']}" class="form-control" placeholder="节点地址" required>
+                <br>
+                <p>节点加密方式</p>
+                <input name="node_method" value="{$info['node_method']}" class="form-control" placeholder="节点加密方式" required>
+                <br>
+                <p>节点状态</p>
+                <input name="node_status" value="{$info['node_status']}" class="form-control" placeholder="节点状态" required>
+                <hr>
+                <button class="btn btn-primary" type="submit">提交</button>
+                <!--   可改成a标签，js进行判断表单正确，再form.submit()-->
+                {if $type == 0}
+                    <a class="btn btn-danger">删除节点</a>
+                {/if}
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+{include file="default/footer"}
+{include file="default/js"}
+</body>
+</html>
