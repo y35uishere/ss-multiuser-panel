@@ -14,20 +14,21 @@
         <div class="status">
             <form action="{:url('admin/node/handler')}" method="post">
                 <input name="type" value="{$type}" hidden>
+                <input name="node_id" value="{$id}" hidden>
                 <p>节点名称</p>
-                <input name="node_name" value="{$info['node_name']}" class="form-control" placeholder="节点名称" required>
+                <input name="node_name" value="{:isset($info['node_name'])?$info['node_name']:''}" class="form-control" placeholder="节点名称" required>
                 <br>
                 <p>节点描述</p>
-                <input name="node_info" value="{$info['node_info']}" class="form-control" placeholder="节点描述" required>
+                <input name="node_info" value="{:isset($info['node_info'])?$info['node_info']:''}" class="form-control" placeholder="节点描述" required>
                 <br>
                 <p>节点地址</p>
-                <input name="node_server" value="{$info['node_server']}" class="form-control" placeholder="节点地址" required>
+                <input name="node_server" value="{:isset($info['node_server'])?$info['node_server']:''}" class="form-control" placeholder="节点地址" required>
                 <br>
                 <p>节点加密方式</p>
-                <input name="node_method" value="{$info['node_method']}" class="form-control" placeholder="节点加密方式" required>
+                <input name="node_method" value="{:isset($info['node_method'])?$info['node_method']:''}" class="form-control" placeholder="节点加密方式" required>
                 <br>
                 <p>节点状态</p>
-                <input name="node_status" value="{$info['node_status']}" class="form-control" placeholder="节点状态" required>
+                <input name="node_status" value="{:isset($info['node_status'])?$info['node_status']:''}" class="form-control" placeholder="节点状态" required>
                 <hr>
                 <button class="btn btn-primary" type="submit">提交</button>
                 <!--   可改成a标签，js进行判断表单正确，再form.submit()-->

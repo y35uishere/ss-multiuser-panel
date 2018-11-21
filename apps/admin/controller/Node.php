@@ -16,15 +16,18 @@ class Node extends Base
     public function infoAction(){
         $type = 0;
 
-        if(!input('?id'))
+        if(!input('?id')){
             $type = 1;
 
+        }
+
+
         //防止SQL注入
-        $id = (int)input('id');
+        $id = (int)input('id',-1);
 
         $info = db('ss_node')->where('id', $id) -> find();
 
-
+        $this->assign('id', $id);
         $this->assign('type', $type);
         $this->assign('info', $info);
         $this->assign('page_title', '节点修改');
