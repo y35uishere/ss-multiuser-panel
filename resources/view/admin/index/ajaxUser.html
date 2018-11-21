@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+    <th>#</th>
+    <th>用户名</th>
+    <th>E-Mail</th>
+    <th>连接密码</th>
+    <th>端口</th>
+    <th>可用性</th>
+    <th>操作</th>
+    </thead>
+    <tbody>
+    {if isset($user_list)}
+    {foreach $user_list as $key}
+    <tr>
+        <td>{$key['uid']}</td>
+        <td>{$key['user_name']}</td>
+        <th>{$key['email']}</th>
+        <td><code>{$key['passwd']}</code></td>
+        <td><code>{$key['port']}</code></td>
+        <td>{$key['switch']}</td>
+        <td><a href="{:url('admin/user/info', 'id='.$key['uid'])}" class="btn btn-primary">⚙</a></td>
+    </tr>
+    {/foreach}
+    {/if}
+    </tbody>
+
+</table>
+{$page_user}

@@ -30,7 +30,7 @@
         <div class="status">
             <h3>用户信息</h3>
             <hr>
-            <div class="panel panel-default user-panel">
+            <div class="panel panel-default user-panel" id="user-list">
                 <table class="table">
                     <thead>
                     <th>#</th>
@@ -39,6 +39,7 @@
                     <th>连接密码</th>
                     <th>端口</th>
                     <th>可用性</th>
+                    <th>操作</th>
                     </thead>
                     <tbody>
                     {if isset($user_list)}
@@ -50,24 +51,14 @@
                         <td><code>{$key['passwd']}</code></td>
                         <td><code>{$key['port']}</code></td>
                         <td>{$key['switch']}</td>
-                        <td><a href="{:url('admin/user/info', 'id='.$key['uid'])}" class="btn btn-primary">⚙ 管理</a></td>
+                        <td><a href="{:url('admin/user/info', 'id='.$key['uid'])}" class="btn btn-primary">⚙</a></td>
                     </tr>
                     {/foreach}
                     {/if}
                     </tbody>
 
                 </table>
-
-                <!--
-                    <hr>
-                    <nav aria-label="node list">
-                        <ul class="pager">
-                            <li><a id="previous" href="javascript:void(0)">←</a></li>
-                            <li><a id="next" href="javascript:void(0)">→</a></li>
-                        </ul>
-                    </nav>
--->
-
+                {$page_user}
             </div>
         </div>
     </div>
@@ -76,9 +67,11 @@
 <div class="node-list">
     <div class="container">
         <div class="status">
-            <h3>节点信息</h3>
+
+            <h3>节点信息<a class="btn btn-primary pull-right">添加节点</a></h3>
+
             <hr>
-            <div class="panel panel-default node-panel">
+            <div class="panel panel-default node-panel" id="node-list">
                 <table class="table">
                     <thead>
                     <th>#</th>
@@ -87,6 +80,7 @@
                     <th>节点地址</th>
                     <th>加密方式</th>
                     <th>可用性</th>
+                    <th>操作</th>
                     </thead>
                     <tbody>
                     {if isset($node_list)}
@@ -98,23 +92,14 @@
                         <td><code>{$key['node_server']}</code></td>
                         <td><code>{$key['node_method']}</code></td>
                         <td>{$key['node_status']}</td>
+                        <td><a href="{:url('admin/user/info', 'id='.$key['id'])}" class="btn btn-primary">⚙</a></td>
                     </tr>
                     {/foreach}
                     {/if}
                     </tbody>
 
                 </table>
-
-                <!--
-                    <hr>
-                    <nav aria-label="node list">
-                        <ul class="pager">
-                            <li><a id="previous" href="javascript:void(0)">←</a></li>
-                            <li><a id="next" href="javascript:void(0)">→</a></li>
-                        </ul>
-                    </nav>
--->
-
+                {$page_node}
             </div>
         </div>
     </div>
@@ -122,5 +107,46 @@
 
 {include file="default/footer"}
 {include file="default/js"}
+<script>
+
+    $(function(){
+        $("#node-list").on('click', ".pagination li a",function(){
+            var pageObj = this;
+            var url = pageObj.href+"&type=node";
+            $.ajax({
+                type:'get',
+                url:url,
+                success:function(res){
+                    $("#node-list").html(res);
+
+                },
+                error:function(res){
+                    $("body").html(res.responseText);
+
+                }
+
+            });
+            return false;
+        });
+        $("#user-list").on('click', ".pagination li a",function(){
+            var pageObj = this;
+            var url = pageObj.href+"&type=user";
+            $.ajax({
+                type:'get',
+                url:url,
+                success:function(res){
+                    $("#user-list").html(res);
+
+                },
+                error:function(res){
+                    $("body").html(res.responseText);
+
+                }
+
+            });
+            return false;
+        });
+    })
+</script>
 </body>
 </html>

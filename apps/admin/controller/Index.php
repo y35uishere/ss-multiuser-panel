@@ -8,9 +8,29 @@ class Index extends Base
     public function indexAction()
     {
         //判断是否登录
-        if(!$this->checkLogin()) {
+        if(!$this->checkLogin())
         	return $this -> redirect('index/login');
+
+
+        $node = db('ss_node') -> paginate(2);
+        $user = db('user') -> paginate(2);
+
+        $page_node = $node -> render();
+        $page_user = $user -> render();
+
+        //Ajax处理
+        if($this->request->isAjax() && input('type') == 'node'){
+            $this -> assign("node_list", $node);
+            $this -> assign("page_node", $page_node);
+            return $this->fetch('index/ajaxNode');
         }
+        else if($this->request->isAjax() && input('type') == 'user'){
+            $this -> assign("user_list", $user);
+            $this -> assign("page_user", $page_user);
+            return $this->fetch('index/ajaxUser');
+        }
+
+
         //用户统计信息
         $info = \think\Db::query('select count(*) as user, sum(money) as money from user;')[0];
         //在线用户
@@ -18,11 +38,12 @@ class Index extends Base
         //节点数
         $info = array_merge($info, \think\Db::query('select count(*) as node from ss_node;')[0]);
 
-        $node = db('ss_node')  -> select();
-        $user = db('user')-> select();
+
 
         $this -> assign("node_list", $node);
         $this -> assign("user_list", $user);
+        $this -> assign("page_node", $page_node);
+        $this -> assign("page_user", $page_user);
         $this -> assign('user_name', session('username'));
         $this -> assign('info', $info);
         $this -> assign('page_title', '后台管理');

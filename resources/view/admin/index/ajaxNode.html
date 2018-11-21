@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+    <th>#</th>
+    <th>节点名称</th>
+    <th>节点描述</th>
+    <th>节点地址</th>
+    <th>加密方式</th>
+    <th>可用性</th>
+    <th>操作</th>
+    </thead>
+    <tbody>
+    {if isset($node_list)}
+    {foreach $node_list as $key}
+    <tr>
+        <td>{$key['id']}</td>
+        <td>{$key['node_name']}</td>
+        <th>{$key['node_info']}</th>
+        <td><code>{$key['node_server']}</code></td>
+        <td><code>{$key['node_method']}</code></td>
+        <td>{$key['node_status']}</td>
+        <td><a href="{:url('admin/user/info', 'id='.$key['id'])}" class="btn btn-primary">⚙</a></td>
+    </tr>
+    {/foreach}
+    {/if}
+    </tbody>
+
+</table>
+{$page_node}
