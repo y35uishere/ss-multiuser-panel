@@ -15,8 +15,11 @@
 			<ul class="nav navbar-nav navbar-right">
 				{if isset($is_login) &&  $is_login == 1}
 				<li class="dropdown">
+
 					<a class="dropdown-toggle" href="#" data-toggle="dropdown">{$username} <b class="caret"></b></a>
 					<ul class="dropdown-menu">
+						<li><a href="#">IP:{$ip}</a></li>
+						<li class="divider"></li>
 						<li><a href="{:url('index/user/index')}">个人帐户</a></li>
 						<li><a href="{:url('index/user/setting')}">设置</a></li>
 						<li class="divider"></li>

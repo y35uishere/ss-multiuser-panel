@@ -18,6 +18,8 @@ class Base extends Controller {
 			$this -> assign('username', session('username'));
 			$this -> assign('is_login', 1);
 		}
+
+        $this -> assign('ip', $this->request->ip());
 		
 
 	}
