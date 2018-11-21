@@ -17,27 +17,51 @@
 							此账号已被停用
 				</div>
 				{/if}
-				<div class="panel panel-default">
-					<table class="table">
-						<tbody>
+				<div class="status">
+					<form action="{:url('admin/node/handler')}" method="post">
+						<input name="user_id" value="{$info['uid']}" hidden>
+						<p>用户名</p>
+						<input value="{$info['user_name']}" class="form-control" placeholder="用户名" disabled>
+						<br>
+						<p>Email</p>
+						<input value="{$info['email']}" class="form-control" placeholder="Email" disabled>
+						<br>
+						<p>余额</p>
+						<input name="user_money" value="{$info['money']}" class="form-control" placeholder="余额" type="number" required>
+						<br>
+						<p>上次使用时间</p>
+						<input value="{:date('Y/m/d H:m:s', $info['t'])}" class="form-control" placeholder="上次使用时间" disabled>
+						<br>
+						<p>连接密码</p>
+						<input name="user_pass" value="{$info['passwd']}" class="form-control" placeholder="连接密码" required>
+						<br>
+						<p>总流量 G</p>
+						<input name="user_trans" value="{$trans['total']}" class="form-control" placeholder="总流量" required>
+						<br>
+						<p>上传 G</p>
+						<input name="user_trans_u" value="{$trans['upload']}" class="form-control" placeholder="上传" required>
+						<br>
+						<p>下载 G</p>
+						<input name="user_trans_d" value="{$trans['download']}" class="form-control" placeholder="下载" required>
+						<hr>
+						<button class="btn btn-primary" type="submit">提交</button>
+						<!--   可改成a标签，js进行判断表单正确，再form.submit()-->
+						{if $info['uid'] != 1}
+							<a href="#" class="btn btn-danger">删除账号</a>
+						{/if}
+						{if $info['uid'] != 1}
+							{if $info['enable'] == 0}
+								<a href="#" class="btn btn-success">启用账号</a>
+							{else}
+								<a href="#" class="btn btn-danger">停用账号</a>
+							{/if}
+						{/if}
+					</form>
+				</div>
+
 							<tr>
-								<td>用户名：{$info['user_name']}</td>
-								<td>Email：{$info['email']}</td>
-								<td>余额：{$info['money']}</td>
-							</tr>
-							<tr>
-								<td>套餐：{$info['plan']}</td>
-								<td>上次使用时间：{:date("Y/m/d H:m:s", $info['t'])}</td>
-								<td>连接密码：{$info['passwd']}</td>
-							</tr>
-							<tr>
-								<td>总流量：{$trans['total']} G</td>
-								<td>已使用（上传）：{$trans['upload']} G</td>
-								<td>已使用（下载）：{$trans['download']} G</td>
-							</tr>
-							<tr>
-								<td>{if $info['uid'] != 1}<a href="#" class="btn btn-danger">删除账号</a>{/if}</td>
-								<td>{if $info['uid'] != 1}{if $info['enable'] == 0}<a href="#" class="btn btn-success">启用账号</a>{else}<a href="#" class="btn btn-danger">停用账号</a>{/if}{/if}</td>
+								<td></td>
+								<td></td>
 								<td></td>
 							</tr>
 						</tbody>
