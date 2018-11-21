@@ -41,8 +41,7 @@ class User extends Base
 
             $this -> assign("node", $node);
             $this -> assign("page", $page);
-            $html = $this->fetch('User/ajaxNode');
-            return $html;
+            return $this->fetch('User/ajaxNode');
         }
 
         $this -> assign("node", $node);
