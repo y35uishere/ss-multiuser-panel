@@ -72,6 +72,15 @@ a:focus {
 }
 
 /* index */
+.warning {
+	background-color: #fcf8e3;
+}
+
+.danger {
+	background-color: #f2dede;
+}
+
+
 .masterhead {
 	background: #599A96;
 }
