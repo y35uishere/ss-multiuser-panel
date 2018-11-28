@@ -99,31 +99,33 @@ class User extends Base
     		return $this->redirect('user/index');
 		
     	$this -> assign("page_title", "用户登录");
-    	
+
+        $id = input('?post.id')?input('post.id'):'';
+        $pw = input('?post.pw')?input('post.pw'):'';
+
+
         if(!input('?post.id') && !input('?post.pw')) 
         	return $this -> fetch();
-        	
-        
-        else if (!empty(input('post.id')) && !empty(input('post.pw'))) {
+        else if (!empty($id) && !empty($pw)) {
             $db = db('user');
-        	$query = $db->where('user_name', input('post.id'))->find();
+        	$query = $db->where('user_name', $id)->find();
         	//$query = isset($query[0])?$query[0]:'';
         	
-        	if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret(input('post.pw')))
+        	if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret($pw))
         		return $this -> error("账号或密码错误", "login");
 
         	
         	
         	
-        	session('username', input('post.id'));
+        	session('username', $id);
         	//将所有查询改为ssp_session
-        	session('ssp_session', $this -> ssp_secret(input('post.id') . $this -> ssp_secret($_POST['pw'])));
+        	session('ssp_session', $this -> ssp_secret($id . $this -> ssp_secret($pw)));
             //记录用户登录
             $db -> where('user_name', session('username')) -> setField('last_login_time', time());
 
-        	return $this->success("欢迎回来，" . input('post.id'), 'user/index');
+        	return $this->success("欢迎回来，" . $id, 'user/index');
         }
-        else if (empty(input('post.id')) || empty(input('post.pw'))) {
+        else if (empty($id) || empty($pw)) {
         	return $this->error('账号或密码错误', 'login');
         }
         
@@ -134,7 +136,16 @@ class User extends Base
     {
     	if($this -> checkLogin()) 
     		return $this->redirect('user/index');
-    	
+
+    	if($this->request->isPost()){
+    	    //id,email,pw1,pw2,key
+
+
+
+            return $this-> success('注册成功，欢迎登船。', 'user/index');
+        }
+
+
 		$this -> assign("page_title", "用户注册");
 		return $this -> fetch();
 	}
@@ -235,7 +246,7 @@ class User extends Base
 	
 	public function checkoutAction()
 	{
-		if (Request::instance()->isPost()) {
+		if ($this->request->isPost()) {
 			$order = $this-> getOrderNo();
 			
 			
@@ -260,4 +271,124 @@ class User extends Base
 		return 'wrong argument'; 
 		
 	}
+
+	public function checkusernameAction(){
+        /* 检查用户名可用性
+         *
+         * 0 => ok
+         * -1 => bad request
+         * -2 => repeated username
+         * -3 => missing argument
+         *
+         */
+
+        if($this->request->isAjax()){
+            $user = input('name');
+
+            if(empty($user))
+                return json([
+                    'response' => -3,
+                    'msg' => 'missing argument',
+                ]);
+
+            $query = db('user') -> where('user_name', $user) ->find();
+
+            if(isset($query))
+                return json([
+                    'response' => -2,
+                    'msg' => 'repeated username',
+                ]);
+
+            return json([
+                'response' => 0,
+                'msg' => 'ok',
+            ]);
+        }
+        else
+            return json([
+                'response' => -1,
+                'msg' => 'bad request',
+            ]);
+
+    }
+
+    public function checkemailAction(){
+        /* 检测email可用性
+         *
+         * 0 => ok
+         * -1 => bad request
+         * -2 => repeated email
+         * -3 => missing argument
+         *
+         */
+
+        if($this->request->isAjax()){
+            $email = input('email');
+
+            if(empty($email))
+                return json([
+                    'response' => -3,
+                    'msg' => 'missing argument',
+                ]);
+
+            $query = db('user') -> where('email', $email) ->find();
+
+            if(isset($query))
+                return json([
+                    'response' => -2,
+                    'msg' => 'repeated email',
+                ]);
+
+            return json([
+                'response' => 0,
+                'msg' => 'ok',
+            ]);
+        }
+        else
+            return json([
+                'response' => -1,
+                'msg' => 'bad request',
+            ]);
+
+    }
+
+    public function checkinviteAction(){
+        /* 检测邀请码可用性
+         *
+         * 0 => ok
+         * -1 => bad request
+         * -2 => repeated invite code
+         * -3 => missing argument
+         *
+         */
+
+        if($this->request->isAjax()){
+            $code = input('code');
+
+            if(empty($code))
+                return json([
+                    'response' => -3,
+                    'msg' => 'missing argument',
+                ]);
+
+            $query = db('invite_code') -> where('code', $code) ->find();
+
+            if(isset($query))
+                return json([
+                    'response' => -2,
+                    'msg' => 'repeated invite code',
+                ]);
+
+            return json([
+                'response' => 0,
+                'msg' => 'ok',
+            ]);
+        }
+        else
+            return json([
+                'response' => -1,
+                'msg' => 'bad request',
+            ]);
+
+    }
 }

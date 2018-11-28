@@ -58,25 +58,28 @@ class Index extends Base
 
         $this ->assign("page_title", '后台登录');
 
+        $id = input('?post.id')?input('post.id'):'';
+        $pw = input('?post.pw')?input('post.pw'):'';
+
         if(!input('?post.id') && !input('?post.pw'))
             return $this -> fetch();
-        else if (!empty(input('post.id')) && !empty(input('post.pw'))) {
-            $query = \think\Db::query('select * from ss_user_admin left JOIN user on (ss_user_admin.uid = user.uid) where user_name = "' . input('post.id') . '"')[0];  //防注入
+        else if (!empty($id) && !empty($pw)) {
+            $query = \think\Db::query('select * from ss_user_admin left JOIN user on (ss_user_admin.uid = user.uid) where user_name = "' . $id . '"')[0];  //防注入
 
 
             //$query = isset($query[0])?$query[0]:'';
 
-            if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret(input('post.pw')))
+            if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret($pw))
                 return $this -> error('账号或密码错误', 'login',-1, 2);
 
 
-            session('username', input('post.id'));
+            session('username', $id);
             //将所有查询改为ssp_session
-            session('ssp_session', $this -> ssp_secret(input('post.id') . $this -> ssp_secret($_POST['pw'])));
+            session('ssp_session', $this -> ssp_secret($id . $this -> ssp_secret($pw)));
 
-            return $this->success('欢迎回来，' . input('post.id'), 'index');
+            return $this->success('欢迎回来，' . $id, 'index');
         }
-        else if (empty(input('post.id')) || empty(input('post.pw'))) {
+        else if (empty($id) || empty($pw)) {
             return $this->error('账号或密码错误', 'login', -1, 2);
         }
 
