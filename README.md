@@ -14,27 +14,46 @@
 
 - [ ] User
 
-- [x] register / login
+- invite
+- index
+- change password
+- charge
+
+- [ ] register / login
+
+- register
+- login
 
 - [ ] validation
 
+- password (using ajax?)
+- validation code required?
+
 - [x] node list
 
-- [x] recharge
+- ajax
 
 - [ ] Youzan SDK
-
-- [x] info
 
 - [x] download
 
 - [ ] email
 
-      ​
+- send validation email
+- activate account
+  ​
 
 - [ ] Admin
 
-- [ ] user manage
+- invite code management
 
-- [ ] node manage
+- [ ] user management
+
+- user control
+
+- [ ] node management
+
+- edit node
+- add node
+- del node
 
