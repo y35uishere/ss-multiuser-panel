@@ -6,7 +6,7 @@
 		<div class="register">
 			<div class="container">
 				<div class="col-lg-5">
-					<form action="{:url('index/user/register')}" method="post">
+					<form action="{:url('index/user/register')}" method="post" id="reg">
 						<h1>用户注册</h1>
 						<hr />
 						<input id="id" name="id" class="form-control" placeholder="账号" required />
@@ -17,9 +17,9 @@
 						<br />
 						<input id="pw2" name="pw2" type="password" class="form-control" placeholder="重复密码" maxlength="20" required />
 						<br />
-						<input id="key" name="key" type="text" class="form-control" placeholder="邀请码" maxlength="27" required />
+						<input id="code" name="code" type="text" class="form-control" placeholder="邀请码" maxlength="27" required />
 						<hr />
-						<input id="reg" value="注册" class="btn btn-default" type="submit" />
+						<input value="注册" class="btn btn-default" type="button" onclick="check();" />
 						<br />
 						
 					</form>
@@ -36,9 +36,29 @@
 		{include file="default/footer"}
 		{include file="default/js"}
 		<script type="application/javascript">
-			$("#reg").on("click", function(){
-				alert("1");
-			})
+            function check() {
+				alert('1');
+				$('#reg').submit();
+            }
+
+            function checkpw2() {
+                if($('#pw2').val() != $('#pw1').val())
+                    $('#pw2').addClass('warning');
+                else if($('#pw2').hasClass('warning'))
+                    $('#pw2').removeClass('warning');
+            }
+
+            $('#pw1').change(function(){
+                checkpw2()
+            });
+            $('#pw2').change(function(){
+                checkpw2()
+            });
+
+
+
+
+
 		</script>
 	</body>
 </html>
