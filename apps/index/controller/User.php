@@ -100,8 +100,8 @@ class User extends Base
 		
     	$this -> assign("page_title", "用户登录");
 
-        $id = input('?post.id')?input('post.id'):'';
-        $pw = input('?post.pw')?input('post.pw'):'';
+        $id = input('post.id');
+        $pw = input('post.pw');
 
 
         if(!input('?post.id') && !input('?post.pw')) 
@@ -194,7 +194,14 @@ class User extends Base
 	
 	public function changepwdAction()
     {
-        return ;
+        /*
+         * 包含已知用户修改以及找回密码
+         * 使用 $token 找回密码
+         * 使用正常后台流程进行修改密码
+         */
+
+        $this -> assign('page_title', '密码修改');
+        return $this ->fetch();
     }
 	public function chargeAction()
 	{
@@ -272,20 +279,21 @@ class User extends Base
 		
 	}
 
-	public function checkusernameAction(){
+	public function checkregAction(){
         /* 检查用户名可用性
          *
          * 0 => ok
          * -1 => bad request
          * -2 => repeated username
          * -3 => missing argument
-         *
+         * -4 => repeated email
          */
 
         if($this->request->isAjax()){
             $user = input('name');
+            $email = input('email');
 
-            if(empty($user))
+            if(empty($user) || empty($email))
                 return json([
                     'response' => -3,
                     'msg' => 'missing argument',
@@ -299,45 +307,14 @@ class User extends Base
                     'msg' => 'repeated username',
                 ]);
 
-            return json([
-                'response' => 0,
-                'msg' => 'ok',
-            ]);
-        }
-        else
-            return json([
-                'response' => -1,
-                'msg' => 'bad request',
-            ]);
-
-    }
-
-    public function checkemailAction(){
-        /* 检测email可用性
-         *
-         * 0 => ok
-         * -1 => bad request
-         * -2 => repeated email
-         * -3 => missing argument
-         *
-         */
-
-        if($this->request->isAjax()){
-            $email = input('email');
-
-            if(empty($email))
-                return json([
-                    'response' => -3,
-                    'msg' => 'missing argument',
-                ]);
-
             $query = db('user') -> where('email', $email) ->find();
 
             if(isset($query))
                 return json([
-                    'response' => -2,
+                    'response' => -4,
                     'msg' => 'repeated email',
                 ]);
+
 
             return json([
                 'response' => 0,
@@ -351,6 +328,7 @@ class User extends Base
             ]);
 
     }
+
 
     public function checkinviteAction(){
         /* 检测邀请码可用性
