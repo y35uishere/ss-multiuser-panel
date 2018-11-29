@@ -5,7 +5,7 @@
 		{include file="default/nav"}
 		<div class="control">
 			<div class="container">
-				<a class="btn btn-default" href="javascript:(window.history.back());">← 返回</a>
+				<a class="btn btn-default" href="{:url('index/index')}">← 返回</a>
 			</div>
 		</div>
 		
@@ -18,7 +18,7 @@
 				</div>
 				{/if}
 				<div class="status">
-					<form action="{:url('admin/node/handler')}" method="post">
+					<form action="{:url('admin/user/handler')}" method="post">
 						<input name="user_id" value="{$info['uid']}" hidden>
 						<p>用户名</p>
 						<input value="{$info['user_name']}" class="form-control" placeholder="用户名" disabled>
@@ -51,9 +51,9 @@
 						{/if}
 						{if $info['uid'] != 1}
 							{if $info['enable'] == 0}
-								<a href="#" class="btn btn-success">启用账号</a>
+								<a href="{:url('admin/user/disable', 'id='.$info['uid'])}" class="btn btn-success">启用账号</a>
 							{else}
-								<a href="#" class="btn btn-danger">停用账号</a>
+								<a href="{:url('admin/user/disable', 'id='.$info['uid'])}" class="btn btn-danger">停用账号</a>
 							{/if}
 						{/if}
 					</form>
