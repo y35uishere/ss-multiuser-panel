@@ -8,14 +8,10 @@ class Base extends Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		session([
-			    'prefix'     => 'ssp',
-			    'type'       => '',
-			    'auto_start' => true,
-		]);
+
 		
-		if(session('?username') && session('?ssp_session')) {
-			$this -> assign('username', session('username'));
+		if(cookie('?username') && cookie('?session')) {
+			$this -> assign('username', cookie('username'));
 			$this -> assign('is_login', 1);
 		}
 
@@ -37,14 +33,14 @@ class Base extends Controller {
 	}
 	
 	protected function checkLogin() {
-		if(!session('?username') || !session('?ssp_session'))
+		if(!cookie('?username') || !cookie('?session'))
 			return false;
 		
-		$query = db('user')->where('user_name', session('username'))->find();
+		$query = db('user')->where('user_name', cookie('username'))->find();
 		
 		if(!isset($query))
 			return false;
-		else if(session('ssp_session') == $this->ssp_secret($query['user_name'] . $query['pass']))
+		else if(cookie('session') == $this->ssp_secret($query['user_name'] . $query['pass']))
 			return true;
 		
 		return false;
@@ -67,4 +63,10 @@ class Base extends Controller {
 	protected function getToken($order = '', $type = '', $money = '') {
 		return md5('SsPaNeL'. $order . $type . $money);
 	}
+
+	protected function checkCookie() {
+        //判断cookies是否被篡改
+        //username、timestamp、session
+        //username.timestamp.pass =>session?
+    }
 }

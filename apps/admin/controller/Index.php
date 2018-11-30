@@ -44,7 +44,7 @@ class Index extends Base
         $this -> assign("user_list", $user);
         $this -> assign("page_node", $page_node);
         $this -> assign("page_user", $page_user);
-        $this -> assign('user_name', session('username'));
+        $this -> assign('user_name', cookie('username'));
         $this -> assign('info', $info);
         $this -> assign('page_title', '后台管理');
         return $this -> fetch();
@@ -67,15 +67,13 @@ class Index extends Base
             $query = \think\Db::query('select * from ss_user_admin left JOIN user on (ss_user_admin.uid = user.uid) where user_name = "' . $id . '"')[0];  //防注入
 
 
-            //$query = isset($query[0])?$query[0]:'';
-
             if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret($pw))
                 return $this -> error('账号或密码错误', 'login',-1, 2);
 
 
-            session('username', $id);
+            cookie('username', $id);
             //将所有查询改为ssp_session
-            session('ssp_session', $this -> ssp_secret($id . $this -> ssp_secret($pw)));
+            cookie('session', $this -> ssp_secret($id . $this -> ssp_secret($pw)));
 
             return $this->success('欢迎回来，' . $id, 'index');
         }
@@ -89,8 +87,8 @@ class Index extends Base
     public function logoutAction()
     {
         if($this->checkLogin()){
-            session('ssp_session', null);
-            session('username', null);
+            cookie('session', null);
+            cookie('username', null);
             return $this -> success('登出成功！', 'login',0 , 2);
         }
         else

@@ -13,11 +13,11 @@ class User extends Base
     	if(!$this -> checkLogin())
     		return $this->redirect('user/login');
     		
-    	$this -> assign("user_name", session('username'));
+    	$this -> assign("user_name", cookie('username'));
         $this -> assign("page_title", "个人中心");
         
 	
-        $query = db('user') -> where('user_name', session('username')) -> find();
+        $query = db('user') -> where('user_name', cookie('username')) -> find();
         
         $this -> assign("info", $query);
         @$this -> assign("remain", 100 - round($query['u'] / $query['transfer_enable'] * 100 + $query['d'] / $query['transfer_enable'] * 100, 1));
@@ -58,14 +58,14 @@ class User extends Base
     		return $this->redirect('user/login');
 		
 		$db = db('user');
-		$query = $db -> where('user_name', session('username')) -> find();
+		$query = $db -> where('user_name', cookie('username')) -> find();
 		
 		if(time() - $query['last_check_in_time'] > 86400) {
-			$db -> where('user_name', session('username')) -> setField('last_check_in_time', time());
+			$db -> where('user_name', cookie('username')) -> setField('last_check_in_time', time());
         	
         	
 	        $r = rand(1, 100) * 1024 * 1024;
-			$db -> where('user_name', session('username')) -> setInc('transfer_enable', $r);
+			$db -> where('user_name', cookie('username')) -> setInc('transfer_enable', $r);
 			
 			$r /= (1024 * 1024);
 			echo "<script>alert('签到成功，获得 $r MB流量');window.location.href='" . url('user/index') . "';</script>";
@@ -81,10 +81,10 @@ class User extends Base
     	if(!$this -> checkLogin())
     		return $this->redirect('user/login');
     		
-    	$this -> assign("user_name", session('username'));
+    	$this -> assign("user_name", cookie('username'));
         $this -> assign("page_title", "账号设置");
         
-        $query = db('user') -> where('user_name', session('username')) -> find();
+        $query = db('user') -> where('user_name', cookie('username')) -> find();
         
         $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1));
         $this -> assign("info", $query);
@@ -99,7 +99,7 @@ class User extends Base
     		return $this->redirect('user/index');
 		
     	$this -> assign("page_title", "用户登录");
-
+        $this -> assign('user', session('?username')?session('username'):'');
         $id = input('post.id');
         $pw = input('post.pw');
 
@@ -114,14 +114,16 @@ class User extends Base
         	if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret($pw))
         		return $this -> error("账号或密码错误", "login");
 
-        	
-        	
-        	
-        	session('username', $id);
+
+
+
+            cookie('username', $id);
         	//将所有查询改为ssp_session
-        	session('ssp_session', $this -> ssp_secret($id . $this -> ssp_secret($pw)));
+            cookie('session', $this -> ssp_secret($id . $this -> ssp_secret($pw)));
             //记录用户登录
-            $db -> where('user_name', session('username')) -> setField('last_login_time', time());
+            $db -> where('user_name', cookie('username')) -> setField('last_login_time', time());
+
+            session('username', $id);
 
         	return $this->success("欢迎回来，" . $id, 'user/index');
         }
@@ -158,8 +160,8 @@ class User extends Base
 	
 	public function logoutAction()
 	{
-		session('username', null);
-		session('ssp_session', null);
+        cookie('username', null);
+        cookie('session', null);
 		
 		return $this->success('登出成功', 'login');
 	}
@@ -169,7 +171,7 @@ class User extends Base
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
 
-		$last_reset = time() - db('user') -> field("last_rest_pass_time")-> where('user_name', session('username')) -> find()['last_rest_pass_time'];
+		$last_reset = time() - db('user') -> field("last_rest_pass_time")-> where('user_name', cookie('username')) -> find()['last_rest_pass_time'];
 
         if($last_reset < 200){
             return $this->error( '密码更改频繁，请 ' . (200 - $last_reset).' 秒后再试。' , 'index');
@@ -177,9 +179,9 @@ class User extends Base
 		
 		$pwd = $this -> getRandomStr(8);
 		
-		db('user') -> where('user_name', session('username')) -> setField("passwd", $pwd);
+		db('user') -> where('user_name', cookie('username')) -> setField("passwd", $pwd);
 
-        db('user') -> where('user_name', session('username')) -> setField("last_rest_pass_time", time());
+        db('user') -> where('user_name', cookie('username')) -> setField("last_rest_pass_time", time());
         
 		
 		return $this->success('重置成功', 'index');
@@ -210,7 +212,7 @@ class User extends Base
 
 		
 		$db = db('user');
-    	$query = $db -> where('user_name', session('username')) -> find();
+    	$query = $db -> where('user_name', cookie('username')) -> find();
     	
     	$this -> assign("info", $query);
 		
@@ -227,7 +229,7 @@ class User extends Base
     		return $this->redirect('user/login');
     	
     	$db = db('user');
-    	$query = $db -> where('user_name', session('username')) -> find();
+    	$query = $db -> where('user_name', cookie('username')) -> find();
 		
 		
 		if($add == 1 && $query['invite_num'] <= 2) {
@@ -235,7 +237,7 @@ class User extends Base
 				
 			db('invite_code') -> insert(['code' => $code, 'user' => 0, 'invite_user' => $query['uid']]);
 			
-			$db -> where('user_name', session('username')) -> setInc('invite_num', 1);
+			$db -> where('user_name', cookie('username')) -> setInc('invite_num', 1);
 			
 			return $this->success('成功', 'invite', 0, 1);
 		}

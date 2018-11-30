@@ -15,14 +15,12 @@ class Base extends Controller {
     public function __construct() {
         parent::__construct();
 
-        session([
-            'prefix'     => 'ssp_admin',
-            'type'       => '',
-            'auto_start' => true,
+        cookie([
+            'prefix'     => 'ssp_admin_',
         ]);
 
-        if(session('?username') && session('?ssp_session')) {
-            $this -> assign('username', session('username'));
+        if(cookie('?username') && cookie('?session')) {
+            $this -> assign('username', cookie('username'));
             $this -> assign('is_login_admin', 1);
         }
 
@@ -42,14 +40,14 @@ class Base extends Controller {
     }
 
     protected function checkLogin() {
-        if(!session('?username') || !session('?ssp_session'))
+        if(!cookie('?username') || !cookie('?session'))
             return false;
 
-        $query = db('user')->where('user_name', session('username'))->find();
+        $query = db('user')->where('user_name', cookie('username'))->find();
 
         if(!isset($query))
             return false;
-        else if(session('ssp_session') == $this->ssp_secret($query['user_name'] . $query['pass']))
+        else if(cookie('session') == $this->ssp_secret($query['user_name'] . $query['pass']))
             return true;
 
         return false;
