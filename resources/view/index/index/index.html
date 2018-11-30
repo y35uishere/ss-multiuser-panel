@@ -10,9 +10,14 @@
 					<p>致力于更简单的管理而生。</p>
 					<br>
 					<br>
+					<hr>
 					<p>
+						{if isset($is_login) &&  $is_login == 1}
+						<a class="btn btn-large btn-primary" href="{:url('index/user/index')}">个人中心</a>
+						{else}
 						<a class="btn btn-large btn-primary" href="{:url('index/user/register')}">即刻加入</a>
 						<a class="btn btn-large btn-default" href="{:url('index/user/login')}">已有账号？</a>
+						{/if}
 					</p>
 				</div>
 			</div>
