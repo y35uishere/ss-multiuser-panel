@@ -10,29 +10,13 @@ class User extends Base
 	
     public function indexAction()
     {
+        //用户中心
     	if(!$this -> checkLogin())
     		return $this->redirect('user/login');
-    		
-    	$this -> assign("user_name", cookie('username'));
-        $this -> assign("page_title", "个人中心");
-        
-	
-        $query = db('user') -> where('user_name', cookie('username')) -> find();
-        
-        $this -> assign("info", $query);
-        @$this -> assign("remain", 100 - round($query['u'] / $query['transfer_enable'] * 100 + $query['d'] / $query['transfer_enable'] * 100, 1));
-        @$this -> assign("progress_u", round($query['u'] / $query['transfer_enable'] * 100, 1));
-        @$this -> assign("progress_d", round($query['d'] / $query['transfer_enable'] * 100, 1));
-        $this -> assign("upload", round($query['u'] / 1024 / 1024 / 1024, 1));
-        $this -> assign("download", round($query['d'] / 1024 / 1024 / 1024, 1));
-        $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1));
-        $this -> assign("last_time", date('Y-m-d H:m:s',$query['t']));
-		
-		$checked = array('t' => date("Y/m/d H:m:s", $query['last_check_in_time']), 'e' => ((time() - $query['last_check_in_time'] > 86400)?'1':'0'));
-		
-		$this -> assign("checked", $checked);
 
-		
+        $query = db('user') -> where('user_name', cookie('username')) -> find();
+
+        //ajax分页输出
         $node = db('ss_node') -> where('node_type < '.$query['type']) -> paginate(2);
 
         $page = $node ->render();
@@ -44,22 +28,36 @@ class User extends Base
             return $this->fetch('User/ajaxNode');
         }
 
+
+        $checked = array('t' => date("Y/m/d H:m:s", $query['last_check_in_time']), 'e' => ((time() - $query['last_check_in_time'] > 86400)?'1':'0'));
+
+        $this -> assign("info", $query);
+        @$this -> assign("remain", 100 - round($query['u'] / $query['transfer_enable'] * 100 + $query['d'] / $query['transfer_enable'] * 100, 1));
+        @$this -> assign("progress_u", round($query['u'] / $query['transfer_enable'] * 100, 1));
+        @$this -> assign("progress_d", round($query['d'] / $query['transfer_enable'] * 100, 1));
+        $this -> assign("upload", round($query['u'] / 1024 / 1024 / 1024, 1));
+        $this -> assign("download", round($query['d'] / 1024 / 1024 / 1024, 1));
+        $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1));
+        $this -> assign("last_time", date('Y-m-d H:m:s',$query['t']));
+		$this -> assign("checked", $checked);
         $this -> assign("node", $node);
         $this -> assign("page", $page);
-
-
+        $this -> assign("user_name", cookie('username'));
+        $this -> assign("page_title", "个人中心");
 
         return $this -> fetch();
     }
 	
 	public function checkinAction()
 	{
+	    //签到部分
 		if(!$this -> checkLogin())
     		return $this->redirect('user/login');
 		
 		$db = db('user');
 		$query = $db -> where('user_name', cookie('username')) -> find();
-		
+
+
 		if(time() - $query['last_check_in_time'] > 86400) {
 			$db -> where('user_name', cookie('username')) -> setField('last_check_in_time', time());
         	
@@ -80,14 +78,14 @@ class User extends Base
     {
     	if(!$this -> checkLogin())
     		return $this->redirect('user/login');
-    		
-    	$this -> assign("user_name", cookie('username'));
-        $this -> assign("page_title", "账号设置");
-        
+
         $query = db('user') -> where('user_name', cookie('username')) -> find();
-        
+
+
         $this -> assign("total", round($query['transfer_enable'] / 1024 / 1024 / 1024, 1));
         $this -> assign("info", $query);
+        $this -> assign("user_name", cookie('username'));
+        $this -> assign("page_title", "账号设置");
        	return $this -> fetch();		
     }
     
@@ -97,35 +95,32 @@ class User extends Base
     	
     	if($this -> checkLogin()) 
     		return $this->redirect('user/index');
-		
-    	$this -> assign("page_title", "用户登录");
-        $this -> assign('user', session('?username')?session('username'):'');
-        $id = input('post.id');
-        $pw = input('post.pw');
 
+
+        $user = input('post.user');
+        $pw = input('post.pw');
+        $this -> assign("page_title", "用户登录");
+        $this -> assign('user', session('?username')?session('username'):'');
 
         if(!input('?post.id') && !input('?post.pw')) 
         	return $this -> fetch();
-        else if (!empty($id) && !empty($pw)) {
+        else if (!empty($user) && !empty($pw)) {
+
             $db = db('user');
-        	$query = $db->where('user_name', $id)->find();
-        	//$query = isset($query[0])?$query[0]:'';
-        	
+        	$query = $db->where('user_name', $user)->find();
+
         	if(!isset($query) || empty($query) || $query['pass'] != $this -> ssp_secret($pw))
         		return $this -> error("账号或密码错误", "login");
 
-
-
-
-            cookie('username', $id);
+            cookie('username', $user);
         	//将所有查询改为ssp_session
-            cookie('session', $this -> ssp_secret($id . $this -> ssp_secret($pw)));
+            cookie('session', $this -> ssp_secret($user . $this -> ssp_secret($pw)));
             //记录用户登录
             $db -> where('user_name', cookie('username')) -> setField('last_login_time', time());
 
-            session('username', $id);
+            session('username', $user);
 
-        	return $this->success("欢迎回来，" . $id, 'user/index');
+        	return $this->success("欢迎回来，" . $user, 'user/index');
         }
         else if (empty($id) || empty($pw)) {
         	return $this->error('账号或密码错误', 'login');
@@ -136,6 +131,7 @@ class User extends Base
     
     public function registerAction()
     {
+        //注册模块
     	if($this -> checkLogin()) 
     		return $this->redirect('user/index');
 
@@ -168,9 +164,11 @@ class User extends Base
 	
 	public function resetpwdAction()
 	{
+	    //连接密码重置
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
 
+		//获取当前时间与上次重置时间差
 		$last_reset = time() - db('user') -> field("last_rest_pass_time")-> where('user_name', cookie('username')) -> find()['last_rest_pass_time'];
 
         if($last_reset < 200){
@@ -178,7 +176,8 @@ class User extends Base
         }
 		
 		$pwd = $this -> getRandomStr(8);
-		
+
+        //应添加判断username是否被篡改（每次使用cookie username时）
 		db('user') -> where('user_name', cookie('username')) -> setField("passwd", $pwd);
 
         db('user') -> where('user_name', cookie('username')) -> setField("last_rest_pass_time", time());
@@ -187,10 +186,46 @@ class User extends Base
 		return $this->success('重置成功', 'index');
 	}
 	
-	private function checkReg($id, $pwd)
+	private function checkReg($user, $pwd, $email, $code)
 	{
+	    //后台表单检查
 		//pwd弱口令禁止
 		//username禁止字段
+        if(!isset($user) || !isset($pwd) || !isset($email) || !isset($code))
+            return false;
+
+        //username正则下划线、字母、数字
+        $preg='/^[\w\_]{6,20}$/u';
+        if(!preg_match($preg, $user))
+            return false;
+
+        //email判断
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+            return false;
+
+        //密码长度
+        if(strlen($pwd) < 5 || strlen($pwd) > 20)
+            return false;
+
+        //冲突email、username
+        $db = db('user');
+        $query = $db -> where('user_name', $user) ->find();
+        if(isset($query))
+            return false;
+
+        $query = $db -> where('email', $email) ->find();
+        if(isset($query))
+            return false;
+
+        //邀请码出错、重复使用
+        $query = db('invite_code') -> where('code', $code) ->find();
+
+        if(isset($query) && $query['user'] != 0)
+            return false;
+        else if(!isset($query))
+            return false;
+
+
 		return true;
 	}
 	
@@ -207,6 +242,7 @@ class User extends Base
     }
 	public function chargeAction()
 	{
+	    //充值页面
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
 
@@ -225,6 +261,8 @@ class User extends Base
 	
 	public function inviteAction($add = 0)
 	{
+	    //邀请
+
 		if(!$this -> checkLogin()) 
     		return $this->redirect('user/login');
     	
@@ -255,6 +293,7 @@ class User extends Base
 	
 	public function checkoutAction()
 	{
+	    //订单信息
 		if ($this->request->isPost()) {
 			$order = $this-> getOrderNo();
 			
@@ -289,6 +328,8 @@ class User extends Base
          * -2 => repeated username
          * -3 => missing argument
          * -4 => repeated email
+         * -5 => invalid username
+         * -6 => invalid email
          */
 
         if($this->request->isAjax()){
@@ -301,7 +342,22 @@ class User extends Base
                     'msg' => 'missing argument',
                 ]);
 
-            $query = db('user') -> where('user_name', $user) ->find();
+            $preg='/^[\w\_]{6,20}$/u';
+            if(!preg_match($preg, $user))
+                return json([
+                    'response' => -5,
+                    'msg' => 'invalid username',
+                ]);
+
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+                return json([
+                    'response' => -6,
+                    'msg' => 'invalid email',
+                ]);
+
+
+            $db = db('user');
+            $query = $db -> where('user_name', $user) ->find();
 
             if(isset($query))
                 return json([
@@ -309,7 +365,7 @@ class User extends Base
                     'msg' => 'repeated username',
                 ]);
 
-            $query = db('user') -> where('email', $email) ->find();
+            $query = $db -> where('email', $email) ->find();
 
             if(isset($query))
                 return json([
@@ -353,16 +409,16 @@ class User extends Base
 
             $query = db('invite_code') -> where('code', $code) ->find();
 
-            if(isset($query))
+            if(isset($query) && $query['user'] != 0)
                 return json([
                     'response' => -2,
-                    'msg' => 'repeated invite code',
+                    'msg' => 'invalid invite code',
                 ]);
-
-            return json([
-                'response' => 0,
-                'msg' => 'ok',
-            ]);
+            else if(isset($query))
+                return json([
+                    'response' => 0,
+                    'msg' => 'ok',
+                ]);
         }
         else
             return json([
